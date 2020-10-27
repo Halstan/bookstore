@@ -5,10 +5,10 @@ import com.rikazzo.back.service.AutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,6 +27,12 @@ public class AutorController {
         List<Autor> autors = this.autorService.findAll();
 
         return new ResponseEntity<>(autors, HttpStatus.OK);
+    }
 
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    private ResponseEntity<Autor> agregarAutor(@RequestBody @Valid Autor autor, BindingResult result){
+        Autor autor1 = this.autorService.agregarAutor(autor);
+
+        return new ResponseEntity<>(autor1, HttpStatus.OK);
     }
 }
