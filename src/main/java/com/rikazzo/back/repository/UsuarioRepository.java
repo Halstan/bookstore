@@ -4,6 +4,7 @@ import com.rikazzo.back.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
@@ -11,7 +12,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
      * Filtra al usuario por el nombre de usuario
      * @param username es el nombre de usuario provisto
      * */
-    Usuario findUsuarioByUsername(String username);
+    Optional<Usuario> findUsuarioByUsername(String username);
 
     /**
      * Filtra los usuarios por el id del sexo

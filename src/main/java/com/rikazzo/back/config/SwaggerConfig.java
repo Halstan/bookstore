@@ -33,7 +33,7 @@ public class SwaggerConfig {
                 "Documentación para la API de Rikazzo Librería",
                 "1.0",
                 "Project - Free to use",
-                new Contact("Rikazzo Librería", "https://github.com/Halstan/library", "enzoarauco@gmail.com"),
+                new Contact("Rikazzo Librería", "https://github.com/Halstan/bookstore", "enzoarauco@gmail.com"),
                 "MIT License",
                 "",
                 Collections.emptyList());

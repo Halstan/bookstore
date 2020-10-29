@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,8 +24,8 @@ public class SexoService {
         return this.sexoRepository.findAll();
     }
 
-    Sexo findById(Integer idSexo){
-        return this.sexoRepository.findById(idSexo).orElse(null);
+    Optional<Sexo> findById(Integer idSexo){
+        return this.sexoRepository.findById(idSexo);
     }
 
     Sexo agregarSexo(Sexo sexo){

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,12 +24,12 @@ public class AutorService {
         return this.autorRepository.findAll();
     }
 
-    public Autor findById(Integer idAutor){
-        return this.autorRepository.findById(idAutor).orElse(null);
+    public Optional<Autor> findById(Integer idAutor){
+        return this.autorRepository.findById(idAutor);
     }
 
     public List<Autor> findByNombre(String nombreAutor){
-        return this.autorRepository.findAutorsByNombreAutor(nombreAutor);
+        return this.autorRepository.findAutorsByNombreAutorStartsWith(nombreAutor);
     }
 
     public Autor agregarAutor(Autor autor){

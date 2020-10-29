@@ -23,11 +23,6 @@ public class Alquiler implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAlquiler;
 
-    @Column(length = 60, nullable = false)
-    @Length(min = 5, max = 60)
-    @NotBlank
-    private String nombreAlquilador;
-
     @Column(nullable = false)
     @NotBlank
     private Date diasPrestamo;

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,8 +24,8 @@ public class CategoriaService {
         return this.categoriaRepository.findAll();
     }
 
-    Categoria findById(Integer idCategoria){
-        return this.categoriaRepository.findById(idCategoria).orElse(null);
+    Optional<Categoria> findById(Integer idCategoria){
+        return this.categoriaRepository.findById(idCategoria);
     }
 
     Categoria agregarCategoria(Categoria categoria){

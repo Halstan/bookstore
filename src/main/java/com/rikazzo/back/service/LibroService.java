@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -39,8 +40,8 @@ public class LibroService {
         return this.libroRepository.findLibrosByCategoriaIdCategoria(idCategoria);
     }
 
-    Libro findById(Long idLibro){
-        return this.libroRepository.findById(idLibro).orElse(null);
+    Optional<Libro> findById(Long idLibro){
+        return this.libroRepository.findById(idLibro);
     }
 
     Libro agregarLibro(Libro libro){

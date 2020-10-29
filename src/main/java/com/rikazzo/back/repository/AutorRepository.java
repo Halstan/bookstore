@@ -11,6 +11,6 @@ public interface AutorRepository extends JpaRepository<Autor, Integer> {
      * Filtra los autores por el nombre del autor
      * @param nombre es el nombre del autor a filtrar
      * */
-    List<Autor> findAutorsByNombreAutor(String nombre);
+    List<Autor> findAutorsByNombreAutorStartsWith(String nombre);
 
 }

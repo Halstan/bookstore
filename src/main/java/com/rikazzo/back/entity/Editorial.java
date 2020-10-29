@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -29,11 +31,11 @@ public class Editorial implements Serializable {
     @NotBlank
     private String fundador;
 
-    @NotBlank
+    @Column(nullable = false)
     private Date fechaFundacion;
 
     @CreationTimestamp
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @OneToMany(mappedBy = "editorial")
     @JsonIgnore

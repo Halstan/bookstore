@@ -36,10 +36,6 @@ public class Libro {
     private String nombreLibro;
 
     @Column(nullable = false)
-    @NotBlank
-    private Integer cantidad;
-
-    @Column(nullable = false)
     private Date fechaPublicacion;
 
     @CreationTimestamp

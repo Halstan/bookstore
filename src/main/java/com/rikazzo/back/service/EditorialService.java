@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -19,27 +20,27 @@ public class EditorialService {
         this.editorialRepository = editorialRepository;
     }
 
-    List<Editorial> findAll(){
+    public List<Editorial> findAll(){
         return this.editorialRepository.findAll();
     }
 
-    List<Editorial> findByNombre(String nombre){
+    public List<Editorial> findByNombre(String nombre){
         return this.editorialRepository.findEditorialsByNombreEditorial(nombre);
     }
 
-    Editorial findById(Integer idEditorial){
-        return this.editorialRepository.findById(idEditorial).orElse(null);
+    public Optional<Editorial> findById(Integer idEditorial){
+        return this.editorialRepository.findById(idEditorial);
     }
 
-    Editorial agregarEditorial(Editorial editorial){
+    public Editorial agregarEditorial(Editorial editorial){
         return this.editorialRepository.save(editorial);
     }
 
-    Editorial actualizarEditorial(Editorial editorial){
+    public Editorial actualizarEditorial(Editorial editorial){
         return this.editorialRepository.save(editorial);
     }
 
-    void eliminarEditorial(Integer idEditorial){
+    public void eliminarEditorial(Integer idEditorial){
         this.editorialRepository.deleteById(idEditorial);
     }
 }
