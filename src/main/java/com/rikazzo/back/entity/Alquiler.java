@@ -30,7 +30,7 @@ public class Alquiler implements Serializable {
 
     @Column(nullable = false)
     @NotBlank
-    private Short diasPrestamo;
+    private Date diasPrestamo;
 
     @Column(nullable = false)
     private Date fechaCreacion;

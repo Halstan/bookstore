@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 @Transactional
@@ -19,31 +21,31 @@ public class AlquilerService {
         this.alquilerRepository = alquilerRepository;
     }
 
-    List<Alquiler> findAll(){
+    public List<Alquiler> findAll(){
         return this.alquilerRepository.findAll();
     }
 
-    Alquiler findById(Long idAlquiler){
-        return this.alquilerRepository.findById(idAlquiler).orElse(null);
+    public Optional<Alquiler> findById(Long idAlquiler){
+        return this.alquilerRepository.findById(idAlquiler);
     }
 
-    List<Alquiler> findAlquilerByIdUsuario(Long idUsuario){
+    public List<Alquiler> findAlquilerByIdUsuario(Long idUsuario){
         return this.alquilerRepository.findAlquilersByUsuarioIdUsuario(idUsuario);
     }
 
-    List<Alquiler> findAlquilerByEstado(boolean estado){
+    public List<Alquiler> findAlquilerByEstado(boolean estado){
         return this.alquilerRepository.findAlquilersByEstado(estado);
     }
 
-    Alquiler agregarAlquiler(Alquiler alquiler){
+    public Alquiler agregarAlquiler(Alquiler alquiler){
         return this.alquilerRepository.save(alquiler);
     }
 
-    Alquiler actualizarAlquilar(Alquiler alquiler){
+    public Alquiler actualizarAlquiler(Alquiler alquiler){
         return this.alquilerRepository.save(alquiler);
     }
 
-    void deleteAlquiler(Long idAlquiler){
+    public void deleteAlquiler(Long idAlquiler){
         this.alquilerRepository.deleteById(idAlquiler);
     }
 }

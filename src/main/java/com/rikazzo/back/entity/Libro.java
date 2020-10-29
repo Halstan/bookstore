@@ -48,6 +48,8 @@ public class Libro {
     @UpdateTimestamp
     private Date fechaActualizacion;
 
+    private Boolean estado;
+
     @OneToMany(mappedBy = "libro")
     private List<Alquiler> alquileres;
 
