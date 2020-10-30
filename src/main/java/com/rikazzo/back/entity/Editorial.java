@@ -18,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "editoriales")
 public class Editorial implements Serializable {
 
     @Id

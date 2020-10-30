@@ -17,6 +17,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "alquileres")
 public class Alquiler implements Serializable {
 
     @Id
@@ -25,7 +26,7 @@ public class Alquiler implements Serializable {
 
     @Column(nullable = false)
     @NotBlank
-    private Date diasPrestamo;
+    private Date fechaRetorno;
 
     @Column(nullable = false)
     private Date fechaCreacion;

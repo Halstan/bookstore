@@ -35,7 +35,6 @@ public class EditorialController {
 
         Integer cantidad = editoriales.size();
 
-
         if (editoriales.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -45,26 +44,29 @@ public class EditorialController {
     }
 
     @GetMapping(value = "{idEditorial}", produces = ENCODED)
-    private ResponseEntity<Optional<Editorial>> findById(@PathVariable Integer idEditorial){
+    private ResponseEntity<?> findById(@PathVariable Integer idEditorial){
         Optional<Editorial> editorial = this.editorialService.findById(idEditorial);
+        Map<String, Object> response = new HashMap<>();
 
         if (editorial.isPresent()){
-            return new ResponseEntity<>(editorial, HttpStatus.OK);
+            Integer cantidadLibros = editorial.get().getLibros().size();
+            response.put("Cantidad de libros", cantidadLibros);
+            response.put("Editorial", editorial.get());
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
 
-    @PostMapping(consumes = ENCODED, produces = ENCODED)
-    private ResponseEntity<?> agregarEditorial(@RequestBody @Valid Editorial editorial, BindingResult result){
-
+    @RequestMapping( method = {RequestMethod.POST, RequestMethod.PUT}, produces = ENCODED, consumes = ENCODED)
+    private ResponseEntity<?> controlarEditorial(@RequestBody @Valid Editorial editorial, BindingResult result){
         List<String> errors;
         Map<String, Object> response = new HashMap<>();
         Editorial editorial1 = new Editorial();
 
         if (result.hasErrors()){
             errors = result.getFieldErrors().stream()
-                    .map(err -> "El campo: " + err.getDefaultMessage() + "no puede estar vacío")
+                    .map(err -> "El campo: " + err.getField() + " " + err.getDefaultMessage())
                     .collect(Collectors.toList());
             response.put("Errores", errors);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -78,22 +80,6 @@ public class EditorialController {
         }
 
         return new ResponseEntity<>(editorial1, HttpStatus.CREATED);
-    }
-
-    @PutMapping(consumes = ENCODED, produces = ENCODED)
-    private ResponseEntity<?> actualizarEditorial(@RequestBody @Valid Editorial editorial, BindingResult result){
-        List<String> errors;
-        Map<String, Object> response = new HashMap<>();
-        Editorial editorial1 = this.editorialService.actualizarEditorial(editorial);
-
-        if (result.hasErrors()){
-            errors = result.getFieldErrors().stream()
-                    .map(err -> "El campo: " + err.getDefaultMessage() + "no puede estar vacío")
-                    .collect(Collectors.toList());
-            response.put("Errores", errors);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(editorial1, HttpStatus.OK);
     }
 
     @DeleteMapping("/{idEditorial}")

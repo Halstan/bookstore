@@ -14,6 +14,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "autores")
 public class Autor implements Serializable {
 
     @Id

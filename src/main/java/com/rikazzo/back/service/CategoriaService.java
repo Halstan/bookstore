@@ -20,23 +20,23 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    List<Categoria> findAll(){
+    public List<Categoria> findAll(){
         return this.categoriaRepository.findAll();
     }
 
-    Optional<Categoria> findById(Integer idCategoria){
+    public Optional<Categoria> findById(Integer idCategoria){
         return this.categoriaRepository.findById(idCategoria);
     }
 
-    Categoria agregarCategoria(Categoria categoria){
+    public Categoria agregarCategoria(Categoria categoria){
         return this.categoriaRepository.save(categoria);
     }
 
-    Categoria actualizarCategoria(Categoria categoria){
+    public Categoria actualizarCategoria(Categoria categoria){
         return this.categoriaRepository.save(categoria);
     }
 
-    void eliminarCategoria(Integer idCategoria){
+    public void eliminarCategoria(Integer idCategoria){
         this.categoriaRepository.deleteById(idCategoria);
     }
 }

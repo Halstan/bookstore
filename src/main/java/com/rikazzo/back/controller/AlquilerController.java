@@ -69,7 +69,7 @@ public class AlquilerController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping(consumes = ENCODED, produces = ENCODED)
+    @RequestMapping( method = {RequestMethod.POST, RequestMethod.PUT}, produces = ENCODED, consumes = ENCODED)
     private ResponseEntity<?> agregarAlquiler(@RequestBody @Valid Alquiler alquiler, BindingResult result){
         List<String> errors;
         Map<String, Object> response = new HashMap<>();
@@ -77,7 +77,7 @@ public class AlquilerController {
 
         if (result.hasErrors()){
             errors = result.getFieldErrors().stream()
-                    .map(err -> "El campo: " + err.getDefaultMessage() + "no puede estar vacío")
+                    .map(err -> "El campo: " + err.getField() + " " + err.getDefaultMessage())
                     .collect(Collectors.toList());
             response.put("Errores", errors);
             return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
@@ -86,26 +86,9 @@ public class AlquilerController {
         try{
             alquiler1 = this.alquilerService.agregarAlquiler(alquiler);
         }catch (DataAccessException e){
-            response.put("Message", "Error al guardar el alquiler de " + alquiler1.getUsuario().getNombre()  + " en la base de datos");
+            response.put("Message", "Error al guardar el alquiler de " + alquiler1.getUsuario().getNombre() + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
         }
-        return new ResponseEntity<>(alquiler1, HttpStatus.CREATED);
-    }
-
-    @PutMapping(consumes = ENCODED, produces = ENCODED)
-    private ResponseEntity<?> actualizarAlquiler(@RequestBody @Valid Alquiler alquiler, BindingResult result){
-        List<String> errors;
-        Map<String, Object> response = new HashMap<>();
-        Alquiler alquiler1 = this.alquilerService.actualizarAlquiler(alquiler);
-
-        if (result.hasErrors()){
-            errors = result.getFieldErrors().stream()
-                    .map(err -> "El campo: " + err.getDefaultMessage() + "no puede estar vacío")
-                    .collect(Collectors.toList());
-            response.put("Errores", errors);
-            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
-        }
-
         return new ResponseEntity<>(alquiler1, HttpStatus.CREATED);
     }
 

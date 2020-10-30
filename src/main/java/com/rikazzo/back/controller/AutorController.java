@@ -36,18 +36,17 @@ public class AutorController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(autores, HttpStatus.OK);
-
     }
 
-    @PostMapping(consumes = ENCODED, produces = ENCODED)
-    private ResponseEntity<?> agregarAutor(@RequestBody @Valid Autor autor, BindingResult result){
+    @RequestMapping( method = {RequestMethod.POST, RequestMethod.PUT}, produces = ENCODED, consumes = ENCODED)
+    private ResponseEntity<?> controlarAutor(@RequestBody @Valid Autor autor, BindingResult result){
         List<String> errors;
         Map<String, Object> response = new HashMap<>();
         Autor autor1 = new Autor();
 
         if (result.hasErrors()){
             errors = result.getFieldErrors().stream()
-                    .map(err -> "El campo: " + err.getDefaultMessage() + "no puede estar vacío")
+                    .map(err -> "El campo: " + err.getField() + " " + err.getDefaultMessage())
                     .collect(Collectors.toList());
             response.put("Errores", errors);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -56,8 +55,9 @@ public class AutorController {
         try{
             autor1 = this.autorService.agregarAutor(autor);
         }catch (DataAccessException e){
-            response.put("Message", "Error al guardar al autor " + autor1.getNombreAutor()  + " en la base de datos");
+            response.put("Message", "Error al guardar al autor " + autor1.getNombreAutor() + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(autor1, HttpStatus.OK);
@@ -77,10 +77,10 @@ public class AutorController {
     private ResponseEntity<Optional<Autor>> findAutor(@PathVariable Integer idAutor){
         Optional<Autor> autor = this.autorService.findById(idAutor);
 
-        if (autor.isPresent()){
-            return new ResponseEntity<>(autor, HttpStatus.OK);
+        if (autor.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(autor, HttpStatus.OK);
     }
 
     @DeleteMapping("/{idAutor}")

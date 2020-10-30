@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
+@Table(name = "usuarios")
 public class Usuario implements Serializable {
 
     @Id
@@ -40,7 +41,7 @@ public class Usuario implements Serializable {
     private String asegurarContrasenha;
 
     @CreationTimestamp
-    private Date createdAt;
+    private Date fechaCreacion;
 
     private boolean activado;
 
@@ -51,4 +52,9 @@ public class Usuario implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "usuario")
     private List<Alquiler> alquileres;
+
+    @PrePersist
+    void init() {
+        activado = true;
+    }
 }

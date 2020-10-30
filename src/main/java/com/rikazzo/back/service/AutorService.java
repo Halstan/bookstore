@@ -36,6 +36,10 @@ public class AutorService {
         return this.autorRepository.save(autor);
     }
 
+    public Autor actualizarAutor(Autor autor){
+        return this.autorRepository.save(autor);
+    }
+
     public void eliminarAutor(Integer idAutor){
         this.autorRepository.deleteById(idAutor);
     }

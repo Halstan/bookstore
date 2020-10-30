@@ -20,19 +20,19 @@ public class SexoService {
         this.sexoRepository = sexoRepository;
     }
 
-    List<Sexo> findAll(){
+    public List<Sexo> findAll(){
         return this.sexoRepository.findAll();
     }
 
-    Optional<Sexo> findById(Integer idSexo){
+    public Optional<Sexo> findById(Short idSexo){
         return this.sexoRepository.findById(idSexo);
     }
 
-    Sexo agregarSexo(Sexo sexo){
+    public Sexo agregarSexo(Sexo sexo){
         return this.sexoRepository.save(sexo);
     }
 
-    void eliminarSexo(Integer idSexo){
+    public void eliminarSexo(Short idSexo){
         this.sexoRepository.deleteById(idSexo);
     }
 }
