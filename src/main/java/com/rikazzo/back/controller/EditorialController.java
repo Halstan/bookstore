@@ -33,14 +33,27 @@ public class EditorialController {
         Map<String, Object> response = new HashMap<>();
         List<Editorial> editoriales = this.editorialService.findAll();
 
-        Integer cantidad = editoriales.size();
-
         if (editoriales.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        response.put("Cantidad de editoriales", cantidad);
+        response.put("Cantidad de editoriales", editoriales.size());
         response.put("Editoriales", editoriales);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/estado/{estado}", produces = ENCODED)
+    private ResponseEntity<?> findByEstado(@PathVariable Boolean estado){
+        Map<String, Object> response = new HashMap<>();
+        List<Editorial> editorials = this.editorialService.findByEstado(estado);
+
+        if (editorials.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        response.put("Cantidad de editoriales", editorials.size());
+        response.put("Editoriales", editorials);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     @GetMapping(value = "{idEditorial}", produces = ENCODED)
@@ -75,7 +88,7 @@ public class EditorialController {
         try{
             editorial1 = this.editorialService.agregarEditorial(editorial);
         }catch (DataAccessException e){
-            response.put("Message", "Error al guardar a la editorial " + editorial1.getNombreEditorial()  + " en la base de datos");
+            response.put("Message", "Error al guardar/actualizar a la editorial " + editorial1.getNombreEditorial()  + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
         }
 
@@ -87,7 +100,7 @@ public class EditorialController {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            this.editorialService.eliminarEditorial(idEditorial);
+            this.editorialService.setEstadoFalse(idEditorial);
             response.put("Mensaje", "La editorial ha sido eliminada con éxito");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (DataAccessException e){

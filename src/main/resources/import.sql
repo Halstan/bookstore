@@ -1,4 +1,4 @@
-insert into editoriales(fecha_creacion, fecha_fundacion, fundador, nombre_editorial) values ('2009-10-01', NOW(), 'Stan Lee', 'DC');
+insert into editoriales(fecha_creacion, fecha_fundacion, fundador, estado, nombre_editorial) values ('2009-10-01', NOW(), 'Stan Lee', 1,'DC');
 
 insert into categorias(nombre_categoria) values ('Terror');
 insert into categorias(nombre_categoria) values ('Psicológico');

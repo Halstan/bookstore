@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -52,6 +53,13 @@ public class Usuario implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "usuario")
     private List<Alquiler> alquileres;
+
+    @ManyToMany
+    @JoinTable(
+            name = "UsuarioRol",
+            joinColumns = {@JoinColumn(name = "idUsuario")},
+            inverseJoinColumns = {@JoinColumn(name = "idRol")})
+    private Set<Rol> roles;
 
     @PrePersist
     void init() {

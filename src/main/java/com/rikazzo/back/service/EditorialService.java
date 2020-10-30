@@ -24,6 +24,10 @@ public class EditorialService {
         return this.editorialRepository.findAll();
     }
 
+    public List<Editorial> findByEstado(Boolean estado){
+        return this.editorialRepository.findEditorialsByEstado(estado);
+    }
+
     public List<Editorial> findByNombre(String nombre){
         return this.editorialRepository.findEditorialsByNombreEditorial(nombre);
     }
@@ -42,5 +46,9 @@ public class EditorialService {
 
     public void eliminarEditorial(Integer idEditorial){
         this.editorialRepository.deleteById(idEditorial);
+    }
+
+    public void setEstadoFalse(Integer idEditorial){
+        this.editorialRepository.setEstadoFalse(idEditorial);
     }
 }

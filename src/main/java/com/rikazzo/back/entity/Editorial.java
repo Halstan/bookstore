@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,6 +39,9 @@ public class Editorial implements Serializable {
     @CreationTimestamp
     private LocalDateTime fechaCreacion;
 
+    @NotNull
+    private boolean estado;
+
     @OneToMany(mappedBy = "editorial")
     @JsonIgnore
     private List<Libro> libros;
@@ -45,5 +49,10 @@ public class Editorial implements Serializable {
     @OneToMany(mappedBy = "editorial")
     @JsonIgnore
     private List<Autor> autors;
+
+    @PrePersist
+    void init(){
+        estado = true;
+    }
 
 }

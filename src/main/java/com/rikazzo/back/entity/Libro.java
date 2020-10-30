@@ -43,6 +43,9 @@ public class Libro {
     @Column(length = 200)
     private String descripcion;
 
+    @Column(length = 30)
+    private String isbn;
+
     @Column(nullable = false)
     private Date fechaPublicacion;
 

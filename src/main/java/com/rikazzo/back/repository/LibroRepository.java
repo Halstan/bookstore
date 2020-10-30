@@ -8,6 +8,12 @@ import java.util.List;
 public interface LibroRepository extends JpaRepository<Libro, Long> {
 
     /**
+     * Filtra los libros por el estado
+     * @param estado es el estado de libros a filtrar
+     * */
+    List<Libro> findLibrosByEstado(Boolean estado);
+
+    /**
      * Filtra los libros por el nombre del libro
      * @param nombreLibro es el nombre de libro a filtrar
      * */
@@ -30,5 +36,6 @@ public interface LibroRepository extends JpaRepository<Libro, Long> {
      * @param idCategoria es el id de la categoría provista
      * */
     List<Libro> findLibrosByCategoriaIdCategoria(Integer idCategoria);
+
 
 }

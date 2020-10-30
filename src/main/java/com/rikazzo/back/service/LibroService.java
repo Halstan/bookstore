@@ -20,39 +20,43 @@ public class LibroService {
         this.libroRepository = libroRepository;
     }
 
-    List<Libro> findAll(){
+    public List<Libro> findAll(){
         return this.libroRepository.findAll();
     }
 
-    List<Libro> findByNombre(String nombreLibro){
+    public List<Libro> findByEstado(Boolean estado){
+        return this.libroRepository.findLibrosByEstado(estado);
+    }
+
+    public List<Libro> findByNombre(String nombreLibro){
         return this.libroRepository.findLibrosByNombreLibro(nombreLibro);
     }
 
-    List<Libro> findLibroByIdEditorial(Integer idEditorial){
+    public List<Libro> findLibroByIdEditorial(Integer idEditorial){
         return this.libroRepository.findLibrosByEditorialIdEditorial(idEditorial);
     }
 
-    List<Libro> findLibrosByNombreEditorial(String nombreEditorial){
+    public List<Libro> findLibrosByNombreEditorial(String nombreEditorial){
         return this.libroRepository.findLibrosByEditorialNombreEditorial(nombreEditorial);
     }
 
-    List<Libro> findLibrosByIdCategoria(Integer idCategoria){
+    public List<Libro> findLibrosByIdCategoria(Integer idCategoria){
         return this.libroRepository.findLibrosByCategoriaIdCategoria(idCategoria);
     }
 
-    Optional<Libro> findById(Long idLibro){
+    public Optional<Libro> findById(Long idLibro){
         return this.libroRepository.findById(idLibro);
     }
 
-    Libro agregarLibro(Libro libro){
+    public Libro agregarLibro(Libro libro){
         return this.libroRepository.save(libro);
     }
 
-    Libro actualizarLibro(Libro libro){
+    public Libro actualizarLibro(Libro libro){
         return this.libroRepository.save(libro);
     }
 
-    void eliminarLibro(Long idLibro){
+    public void eliminarLibro(Long idLibro){
         this.libroRepository.deleteById(idLibro);
     }
 
