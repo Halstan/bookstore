@@ -96,12 +96,27 @@ public class EditorialController {
     }
 
     @DeleteMapping("/{idEditorial}")
-    private ResponseEntity<?> eliminarEditorial(@PathVariable Integer idEditorial){
+    private ResponseEntity<?> desactivarEditorial(@PathVariable Integer idEditorial){
         Map<String, Object> response = new HashMap<>();
 
         try {
             this.editorialService.setEstadoFalse(idEditorial);
-            response.put("Mensaje", "La editorial ha sido eliminada con éxito");
+            response.put("Mensaje", "La editorial ha sido desactivada con éxito");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (DataAccessException e){
+            response.put("Mensaje", "Error al desactivar a la editorial");
+            response.put("Error", e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/eliminar/{idEditorial}")
+    private ResponseEntity<?> eliminarEditorial(@PathVariable Integer idEditorial){
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            this.editorialService.eliminarEditorial(idEditorial);
+            response.put("Mensaje", "La editorial ha sido eliminar con éxito");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (DataAccessException e){
             response.put("Mensaje", "Error al eliminar a la editorial");

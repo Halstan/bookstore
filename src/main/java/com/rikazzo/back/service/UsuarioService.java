@@ -20,31 +20,31 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    List<Usuario> findAll(){
+    public List<Usuario> findAll(){
         return this.usuarioRepository.findAll();
     }
 
-    Optional<Usuario> findByUsername(String username){
+    public Optional<Usuario> findByUsername(String username){
         return this.usuarioRepository.findUsuarioByUsername(username);
     }
 
-    List<Usuario> findUsuarioByIdSexo(Integer idSexo){
+    public List<Usuario> findUsuarioByIdSexo(Integer idSexo){
         return this.usuarioRepository.findUsuariosBySexoIdSexo(idSexo);
     }
 
-    List<Usuario> findByNombre(String nombre){
+    public List<Usuario> findByNombre(String nombre){
         return this.usuarioRepository.findUsuariosByNombre(nombre);
     }
 
-    Optional<Usuario> findById(Long idUsuario){
+    public Optional<Usuario> findById(Long idUsuario){
         return this.usuarioRepository.findById(idUsuario);
     }
 
-    Usuario agregarUsuario(Usuario usuario){
+    public Usuario agregarUsuario(Usuario usuario){
         return this.usuarioRepository.save(usuario);
     }
 
-    void eliminarUsuario(Long idUsuario){
+    public void eliminarUsuario(Long idUsuario){
         this.usuarioRepository.deleteById(idUsuario);
     }
 }
