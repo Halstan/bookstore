@@ -54,7 +54,59 @@ public class LibroController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(value = "{idLibro}")
+    @GetMapping(value = "nombre/{nombre}", produces = ENCODED)
+    private ResponseEntity<?> findByNombre(@PathVariable String nombre){
+        Map<String, Object> response = new HashMap<>();
+        List<Libro> libros = this.libroService.findByNombre(nombre);
+
+        if (libros.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        response.put("Cantidad de libros", libros.size());
+        response.put("Libros", libros);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "editorial/{idEditorial}")
+    private ResponseEntity<?> findByEditorial(@PathVariable Integer idEditorial){
+        Map<String, Object> response = new HashMap<>();
+        List<Libro> libros = this.libroService.findLibrosByIdEditorial(idEditorial);
+
+        if (libros.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        response.put("Cantidad de libros", libros.size());
+        response.put("Libros", libros);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "editorial/nombre/{nombreEditorial}")
+    private ResponseEntity<?> findByNombreEditorial(@PathVariable String nombreEditorial){
+        Map<String, Object> response = new HashMap<>();
+        List<Libro> libros = this.libroService.findLibrosByNombreEditorial(nombreEditorial);
+
+        if (libros.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        response.put("Cantidad de libros", libros.size());
+        response.put("Libros", libros);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "categoria/{idCategoria}", produces = ENCODED)
+    private ResponseEntity<?> findByIdCategoria(@PathVariable Integer idCategoria){
+        Map<String, Object> response = new HashMap<>();
+        List<Libro> libros = this.libroService.findLibrosByIdCategoria(idCategoria);
+
+        if (libros.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        response.put("Cantidad de libros", libros.size());
+        response.put("Libros", libros);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "{idLibro}", produces = ENCODED)
     private ResponseEntity<Optional<Libro>> findById(@PathVariable Long idLibro){
         Optional<Libro> libro = this.libroService.findById(idLibro);
 
@@ -101,6 +153,5 @@ public class LibroController {
             response.put("Error", e.getMostSpecificCause().getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 }

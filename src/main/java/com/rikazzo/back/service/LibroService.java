@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class LibroService {
 
     private final LibroRepository libroRepository;
@@ -29,15 +29,15 @@ public class LibroService {
     }
 
     public List<Libro> findByNombre(String nombreLibro){
-        return this.libroRepository.findLibrosByNombreLibro(nombreLibro);
+        return this.libroRepository.findLibrosByNombreLibroStartsWith(nombreLibro);
     }
 
-    public List<Libro> findLibroByIdEditorial(Integer idEditorial){
+    public List<Libro> findLibrosByIdEditorial(Integer idEditorial){
         return this.libroRepository.findLibrosByEditorialIdEditorial(idEditorial);
     }
 
     public List<Libro> findLibrosByNombreEditorial(String nombreEditorial){
-        return this.libroRepository.findLibrosByEditorialNombreEditorial(nombreEditorial);
+        return this.libroRepository.findLibrosByEditorialNombreEditorialStartsWith(nombreEditorial);
     }
 
     public List<Libro> findLibrosByIdCategoria(Integer idCategoria){

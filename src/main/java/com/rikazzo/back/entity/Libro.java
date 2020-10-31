@@ -1,5 +1,6 @@
 package com.rikazzo.back.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,6 +59,7 @@ public class Libro {
     private Boolean estado;
 
     @OneToMany(mappedBy = "libro")
+    @JsonIgnore
     private List<Alquiler> alquileres;
 
     @ManyToMany

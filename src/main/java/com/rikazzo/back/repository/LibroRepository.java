@@ -17,7 +17,7 @@ public interface LibroRepository extends JpaRepository<Libro, Long> {
      * Filtra los libros por el nombre del libro
      * @param nombreLibro es el nombre de libro a filtrar
      * */
-    List<Libro> findLibrosByNombreLibro(String nombreLibro);
+    List<Libro> findLibrosByNombreLibroStartsWith(String nombreLibro);
 
     /**
      * Filtra los libros por el Id de la editorial
@@ -29,7 +29,7 @@ public interface LibroRepository extends JpaRepository<Libro, Long> {
      * Filtra los libros por el nombre de la editorial
      * @param nombreEditorial es el nombre de la editorial
      * */
-    List<Libro> findLibrosByEditorialNombreEditorial(String nombreEditorial);
+    List<Libro> findLibrosByEditorialNombreEditorialStartsWith(String nombreEditorial);
 
     /**
      * Filtra los libros por el id de la categoría
