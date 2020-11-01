@@ -48,6 +48,7 @@ public class EditorialService {
         this.editorialRepository.deleteById(idEditorial);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void setEstadoFalse(Integer idEditorial){
         this.editorialRepository.setEstadoFalse(idEditorial);
     }

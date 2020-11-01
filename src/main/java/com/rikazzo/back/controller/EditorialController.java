@@ -56,6 +56,20 @@ public class EditorialController {
 
     }
 
+    @GetMapping(value = "/nombre/{nombre}", produces = ENCODED)
+    private ResponseEntity<?> findByNombre(@PathVariable String nombre){
+        Map<String, Object> response = new HashMap<>();
+        List<Editorial> editorials = this.editorialService.findByNombre(nombre);
+
+        if (editorials.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        response.put("Cantidad de editoriales", editorials.size());
+        response.put("Editoriales", editorials);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping(value = "{idEditorial}", produces = ENCODED)
     private ResponseEntity<?> findById(@PathVariable Integer idEditorial){
         Optional<Editorial> editorial = this.editorialService.findById(idEditorial);

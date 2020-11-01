@@ -2,23 +2,25 @@ package com.rikazzo.back.service;
 
 import com.rikazzo.back.entity.Alquiler;
 import com.rikazzo.back.repository.AlquilerRepository;
+import com.rikazzo.back.repository.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 @Service
 @Transactional
 public class AlquilerService {
 
     private final AlquilerRepository alquilerRepository;
+    private final LibroRepository libroRepository;
 
     @Autowired
-    public AlquilerService(AlquilerRepository alquilerRepository) {
+    public AlquilerService(AlquilerRepository alquilerRepository, LibroRepository libroRepository) {
         this.alquilerRepository = alquilerRepository;
+        this.libroRepository = libroRepository;
     }
 
     public List<Alquiler> findAll(){
@@ -38,6 +40,7 @@ public class AlquilerService {
     }
 
     public Alquiler agregarAlquiler(Alquiler alquiler){
+        this.libroRepository.setEstadoFalse(alquiler.getLibro().getIdLibro());
         return this.alquilerRepository.save(alquiler);
     }
 

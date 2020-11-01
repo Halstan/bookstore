@@ -2,6 +2,9 @@ package com.rikazzo.back.repository;
 
 import com.rikazzo.back.entity.Libro;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -37,5 +40,20 @@ public interface LibroRepository extends JpaRepository<Libro, Long> {
      * */
     List<Libro> findLibrosByCategoriaIdCategoria(Integer idCategoria);
 
+    /**
+     * Actualiza el estado del libro a false para indicar que ha sido prestado
+     * @param idLibro es el id del libro provisto
+     * */
+    @Query(value = "update libros set estado = 0 where id_libro = :idLibro", nativeQuery = true)
+    @Modifying
+    void setEstadoFalse(@Param("idLibro") Long idLibro);
+
+    /**
+     * Actualiza el estado del libro a true para indicar que está disponible para reservar
+     * @param idLibro es el id del libro provisto
+     * */
+    @Query(value = "update libros set estado = 1 where id_libro = :idLibro", nativeQuery = true)
+    @Modifying
+    void setEstadoTrue(@Param("idLibro") Long idLibro);
 
 }

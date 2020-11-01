@@ -92,7 +92,22 @@ public class AlquilerController {
         return new ResponseEntity<>(alquiler1, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{idAlquiler}")
+    @DeleteMapping
+    private ResponseEntity<?> desactivarAlquiler(@PathVariable Long idAlquiler){
+        Map<String, Object> response = new HashMap<>();
+
+        try{
+            this.alquilerService.deleteAlquiler(idAlquiler);
+            response.put("Mensaje", "El alquiler ha sido eliminado con éxito");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (DataAccessException e){
+            response.put("Mensaje", "Error al eliminar el alquiler");
+            response.put("Error", e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/eliminar/{idAlquiler}")
     private ResponseEntity<?> eliminarAlquiler(@PathVariable Long idAlquiler){
         Map<String, Object> response = new HashMap<>();
 
