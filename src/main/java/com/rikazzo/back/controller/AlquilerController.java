@@ -38,7 +38,7 @@ public class AlquilerController {
         return new ResponseEntity<>(alquilers, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{idUsuario}", produces = ENCODED)
+    @GetMapping(value = "/usuario/{idUsuario}", produces = ENCODED)
     private ResponseEntity<List<Alquiler>> findByIdUsuario(@PathVariable Long idUsuario){
         List<Alquiler> alquilers = this.alquilerService.findAlquilerByIdUsuario(idUsuario);
 
@@ -49,7 +49,7 @@ public class AlquilerController {
 
     }
 
-    @GetMapping(value = "/{estado}", produces = ENCODED)
+    @GetMapping(value = "/estado/{estado}", produces = ENCODED)
     private ResponseEntity<List<Alquiler>> findByEstado(@PathVariable boolean estado){
         List<Alquiler> alquilers = this.alquilerService.findAlquilerByEstado(estado);
 
@@ -86,22 +86,22 @@ public class AlquilerController {
         try{
             alquiler1 = this.alquilerService.agregarAlquiler(alquiler);
         }catch (DataAccessException e){
-            response.put("Message", "Error al guardar el alquiler de " + alquiler1.getUsuario().getNombre() + " en la base de datos");
+            response.put("Message", "Error al guardar el alquiler de " + alquiler.getUsuario().getNombre() + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
         }
         return new ResponseEntity<>(alquiler1, HttpStatus.CREATED);
     }
 
-    @DeleteMapping
+    @DeleteMapping("{idAlquiler}")
     private ResponseEntity<?> desactivarAlquiler(@PathVariable Long idAlquiler){
         Map<String, Object> response = new HashMap<>();
 
         try{
-            this.alquilerService.deleteAlquiler(idAlquiler);
-            response.put("Mensaje", "El alquiler ha sido eliminado con éxito");
+            this.alquilerService.setEstadoFalse(idAlquiler);
+            response.put("Mensaje", "El alquiler ha sido desactivado con éxito");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (DataAccessException e){
-            response.put("Mensaje", "Error al eliminar el alquiler");
+            response.put("Mensaje", "Error al desactivar el alquiler");
             response.put("Error", e.getMostSpecificCause().getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }

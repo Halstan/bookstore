@@ -44,7 +44,7 @@ public class CategoriaController {
     private ResponseEntity<?> controlarCategoria(@RequestBody @Valid Categoria categoria, BindingResult result){
         List<String> errors;
         Map<String, Object> response = new HashMap<>();
-        Categoria categoria1 = new Categoria();
+        Categoria categoria1;
 
         if(result.hasErrors()){
             errors = result.getFieldErrors().stream()
@@ -56,7 +56,7 @@ public class CategoriaController {
         try{
             categoria1 = this.categoriaService.agregarCategoria(categoria);
         }catch(DataAccessException e){
-            response.put("Message", "Error al guardar a la categoría " + categoria1.getNombreCategoria()  + " en la base de datos");
+            response.put("Message", "Error al guardar a la categoría " + categoria.getNombreCategoria()  + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }

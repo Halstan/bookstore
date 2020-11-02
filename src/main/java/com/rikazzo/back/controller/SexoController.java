@@ -68,7 +68,7 @@ public class SexoController {
         try{
             sexo1 = this.sexoService.agregarSexo(sexo);
         }catch (DataAccessException e){
-            response.put("Message", "Error al guardar/actualizar el sexo " + sexo1.getNombreSexo() + " en la base de datos");
+            response.put("Message", "Error al guardar/actualizar el sexo " + sexo.getNombreSexo() + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
         }
         return new ResponseEntity<>(sexo1, HttpStatus.CREATED);

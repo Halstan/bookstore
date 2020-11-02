@@ -42,7 +42,7 @@ public class AutorController {
     private ResponseEntity<?> controlarAutor(@RequestBody @Valid Autor autor, BindingResult result){
         List<String> errors;
         Map<String, Object> response = new HashMap<>();
-        Autor autor1 = new Autor();
+        Autor autor1;
 
         if (result.hasErrors()){
             errors = result.getFieldErrors().stream()
@@ -55,7 +55,7 @@ public class AutorController {
         try{
             autor1 = this.autorService.agregarAutor(autor);
         }catch (DataAccessException e){
-            response.put("Message", "Error al guardar al autor " + autor1.getNombreAutor() + " en la base de datos");
+            response.put("Message", "Error al guardar al autor " + autor.getNombreAutor() + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }

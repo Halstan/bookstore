@@ -120,7 +120,7 @@ public class LibroController {
     private ResponseEntity<?> controlarLibro(@RequestBody @Valid Libro libro, BindingResult result){
         List<String> errors;
         Map<String, Object> response = new HashMap<>();
-        Libro libro1 = new Libro();
+        Libro libro1;
 
         if (result.hasErrors()){
             errors = result.getFieldErrors().stream()
@@ -133,8 +133,9 @@ public class LibroController {
         try{
             libro1 = this.libroService.agregarLibro(libro);
         }catch (DataAccessException e){
-            response.put("Message", "Error al guardar/actualizar el libro " + libro1.getNombreLibro()  + " en la base de datos");
+            response.put("Message", "Error al guardar/actualizar el libro " + libro.getNombreLibro()  + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(libro1, HttpStatus.CREATED);

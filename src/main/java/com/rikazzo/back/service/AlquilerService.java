@@ -48,6 +48,10 @@ public class AlquilerService {
         return this.alquilerRepository.save(alquiler);
     }
 
+    public void setEstadoFalse(Long idAlquiler){
+        this.alquilerRepository.setEstadoFalse(idAlquiler);
+    }
+
     public void deleteAlquiler(Long idAlquiler){
         this.alquilerRepository.deleteById(idAlquiler);
     }

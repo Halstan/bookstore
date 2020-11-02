@@ -56,7 +56,7 @@ public class IdiomaController {
 
     @RequestMapping( method = {RequestMethod.POST, RequestMethod.PUT}, produces = ENCODED, consumes = ENCODED)
     private ResponseEntity<?> controlarIdioma(@RequestBody @Valid Idioma idioma, BindingResult result){
-        Idioma idioma1 = new Idioma();
+        Idioma idioma1;
 
         if(result.hasErrors()){
             errors = result.getFieldErrors().stream()
@@ -68,7 +68,7 @@ public class IdiomaController {
         try{
             idioma1 = this.idiomaService.agregarIdioma(idioma);
         }catch(DataAccessException e){
-            response.put("Message", "Error al guardar el idioma " + idioma1.getNombreIdioma()  + " en la base de datos");
+            response.put("Message", "Error al guardar el idioma " + idioma.getNombreIdioma()  + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }

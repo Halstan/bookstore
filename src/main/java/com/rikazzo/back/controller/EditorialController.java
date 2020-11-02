@@ -102,7 +102,7 @@ public class EditorialController {
         try{
             editorial1 = this.editorialService.agregarEditorial(editorial);
         }catch (DataAccessException e){
-            response.put("Message", "Error al guardar/actualizar a la editorial " + editorial1.getNombreEditorial()  + " en la base de datos");
+            response.put("Message", "Error al guardar/actualizar a la editorial " + editorial.getNombreEditorial()  + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
         }
 

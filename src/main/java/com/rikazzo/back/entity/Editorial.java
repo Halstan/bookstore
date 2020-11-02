@@ -46,10 +46,6 @@ public class Editorial implements Serializable {
     @JsonIgnore
     private List<Libro> libros;
 
-    @OneToMany(mappedBy = "editorial")
-    @JsonIgnore
-    private List<Autor> autors;
-
     @PrePersist
     void init(){
         estado = true;

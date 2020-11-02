@@ -28,6 +28,6 @@ public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
      * */
     @Query(value = "update alquileres set estado = 0 where id_alquiler = :idAlquiler", nativeQuery = true)
     @Modifying
-    void setEstadoFalse(@Param("idAlquiler") Integer idAlquiler);
+    void setEstadoFalse(@Param("idAlquiler") Long idAlquiler);
 
 }

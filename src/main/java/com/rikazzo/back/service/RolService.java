@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -21,6 +22,10 @@ public class RolService {
 
     List<Rol> findAll(){
         return this.rolRepository.findAll();
+    }
+
+    Set<Rol> findByNombre(String nombre){
+        return this.rolRepository.findRolsByNombreRol(nombre);
     }
 
     Rol findById(Integer idRol){

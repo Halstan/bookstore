@@ -1,5 +1,6 @@
 package com.rikazzo.back.controller;
 
+import com.rikazzo.back.entity.Libro;
 import com.rikazzo.back.entity.Usuario;
 import com.rikazzo.back.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,12 +42,48 @@ public class UsuarioController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping(value = "{idUsuario}", produces = ENCODED)
+    private ResponseEntity<Optional<Usuario>> findById(@PathVariable Long idUsuario){
+        Optional<Usuario> libro = this.usuarioService.findById(idUsuario);
+
+        if (libro.isPresent()){
+            return new ResponseEntity<>(libro, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/nombre/{nombre}", produces = ENCODED)
+    private ResponseEntity<?> findByNombre(@PathVariable String nombre){
+        Map<String, Object> response = new HashMap<>();
+        List<Usuario> usuarios = this.usuarioService.findByNombre(nombre);
+
+        if (usuarios.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        response.put("Cantidad de usuarios", usuarios.size());
+        response.put("Usuarios", usuarios);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/sexo/{idSexo}", produces = ENCODED)
+    private ResponseEntity<?> findBySexo(@PathVariable Short idSexo){
+        Map<String, Object> response = new HashMap<>();
+        List<Usuario> usuarios = this.usuarioService.findUsuarioByIdSexo(idSexo);
+
+        if (usuarios.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        response.put("Cantidad de usuarios", usuarios.size());
+        response.put("Usuarios", usuarios);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, consumes = ENCODED, produces = ENCODED)
     private ResponseEntity<?> agregarUsuario(@RequestBody @Valid Usuario usuario, BindingResult result){
 
         List<String> errors;
         Map<String, Object> response = new HashMap<>();
-        Usuario usuario1 = new Usuario();
+        Usuario usuario1;
 
         if (result.hasErrors()){
             errors = result.getFieldErrors().stream()
@@ -58,8 +96,9 @@ public class UsuarioController {
         try{
             usuario1 = this.usuarioService.agregarUsuario(usuario);
         }catch (DataAccessException e){
-            response.put("Message", "Error al guardar/actualizar al usuario " + usuario1.getNombre() + " " + usuario1.getApellido() + " en la base de datos");
+            response.put("Message", "Error al guardar/actualizar al usuario " + usuario.getNombre() + " " + usuario.getApellido() + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(usuario1, HttpStatus.CREATED);
     }

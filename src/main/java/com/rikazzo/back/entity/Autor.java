@@ -1,5 +1,6 @@
 package com.rikazzo.back.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -34,8 +36,8 @@ public class Autor implements Serializable {
     @CreationTimestamp
     private Date fechaCreacion;
 
-    @ManyToOne
-    @JoinColumn(name = "idEditorial")
-    private Editorial editorial;
+    @OneToMany(mappedBy = "autor")
+    @JsonIgnore
+    private List<Libro> libros;
 
 }

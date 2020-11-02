@@ -18,12 +18,12 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
      * Filtra los usuarios por el id del sexo
      * @param idSexo es el id del sexo provisto
      * */
-    List<Usuario> findUsuariosBySexoIdSexo(Integer idSexo);
+    List<Usuario> findUsuariosBySexoIdSexo(Short idSexo);
 
     /**
      * Filtra los usuarios por el nombre
      * @param nombre es el nombre del usuario
      * */
-    List<Usuario> findUsuariosByNombre(String nombre);
+    List<Usuario> findUsuariosByNombreStartsWith(String nombre);
 
 }

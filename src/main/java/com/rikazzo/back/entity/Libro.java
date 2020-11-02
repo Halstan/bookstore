@@ -27,13 +27,11 @@ public class Libro {
     private Long idLibro;
 
     @ManyToOne
-    @NotBlank
-    @JoinColumn(name = "idCategoria")
+    @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
 
     @ManyToOne
-    @NotBlank
-    @JoinColumn(name = "idEditorial")
+    @JoinColumn(name = "idEditorial", nullable = false)
     private Editorial editorial;
 
     @Column(length = 80, nullable = false)
@@ -44,7 +42,11 @@ public class Libro {
     @Column(length = 200)
     private String descripcion;
 
-    @Column(length = 30)
+    @Column(length = 150, nullable = false)
+    @Size(min = 30, max = 150)
+    private String urlPortada;
+
+    @Column(length = 30, unique = true)
     private String isbn;
 
     @Column(nullable = false)
@@ -56,18 +58,21 @@ public class Libro {
     @UpdateTimestamp
     private Date fechaActualizacion;
 
+    private Double precio;
+
     private Boolean estado;
 
     @OneToMany(mappedBy = "libro")
     @JsonIgnore
     private List<Alquiler> alquileres;
 
-    @ManyToMany
-    @JoinTable(
-            name = "LibroIdioma",
-            joinColumns = {@JoinColumn(name = "idLibro")},
-            inverseJoinColumns = {@JoinColumn(name = "idIdioma")})
-    private Set<Idioma> idiomas;
+    @ManyToOne
+    @JoinColumn(name = "idIdioma", nullable = false)
+    private Idioma idioma;
+
+    @ManyToOne
+    @JoinColumn(name = "idAutor", nullable = false)
+    private Autor autor;
 
     @PrePersist
     void init(){
