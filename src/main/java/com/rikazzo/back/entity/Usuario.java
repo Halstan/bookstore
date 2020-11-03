@@ -39,7 +39,6 @@ public class Usuario implements Serializable {
     private String contrasenha;
 
     @Transient
-    @JsonIgnore
     private String asegurarContrasenha;
 
     @CreationTimestamp

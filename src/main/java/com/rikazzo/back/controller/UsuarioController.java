@@ -85,22 +85,27 @@ public class UsuarioController {
         Map<String, Object> response = new HashMap<>();
         Usuario usuario1;
 
-        if (result.hasErrors()){
-            errors = result.getFieldErrors().stream()
-                    .map(err -> "El campo: " + err.getField() + " " + err.getDefaultMessage())
-                    .collect(Collectors.toList());
-            response.put("Errores", errors);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
+        if (usuario.getContrasenha().equals(usuario.getAsegurarContrasenha())){
+            if (result.hasErrors()){
+                errors = result.getFieldErrors().stream()
+                        .map(err -> "El campo: " + err.getField() + " " + err.getDefaultMessage())
+                        .collect(Collectors.toList());
+                response.put("Errores", errors);
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
 
-        try{
-            usuario1 = this.usuarioService.agregarUsuario(usuario);
-        }catch (DataAccessException e){
-            response.put("Message", "Error al guardar/actualizar al usuario " + usuario.getNombre() + " " + usuario.getApellido() + " en la base de datos");
-            response.put("Error", e.getMostSpecificCause().getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            try{
+                usuario1 = this.usuarioService.agregarUsuario(usuario);
+            }catch (DataAccessException e){
+                response.put("Message", "Error al guardar/actualizar al usuario " + usuario.getNombre() + " " + usuario.getApellido() + " en la base de datos");
+                response.put("Error", e.getMostSpecificCause().getMessage());
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(usuario1, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(usuario1, HttpStatus.CREATED);
+        response.put("Contraseñas no coinciden", "La contraseña no coincide");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
 
 }
