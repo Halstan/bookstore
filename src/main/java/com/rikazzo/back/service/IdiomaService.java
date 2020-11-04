@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class IdiomaService {
 
     private final IdiomaRepository idiomaRepository;
@@ -20,22 +19,27 @@ public class IdiomaService {
         this.idiomaRepository = idiomaRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Idioma> findAll(){
         return this.idiomaRepository.findAll();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Idioma agregarIdioma(Idioma idioma){
         return this.idiomaRepository.save(idioma);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Idioma actualizarIdioma(Idioma idioma){
         return this.idiomaRepository.save(idioma);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Idioma> findById(Integer idIdioma){
         return this.idiomaRepository.findById(idIdioma);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void eliminarIdioma(Integer idIdioma){
         this.idiomaRepository.deleteById(idIdioma);
     }

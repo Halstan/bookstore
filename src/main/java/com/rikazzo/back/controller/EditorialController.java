@@ -104,6 +104,7 @@ public class EditorialController {
         }catch (DataAccessException e){
             response.put("Message", "Error al guardar/actualizar a la editorial " + editorial.getNombreEditorial()  + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(editorial1, HttpStatus.CREATED);

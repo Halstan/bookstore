@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class AutorService {
 
     private final AutorRepository autorRepository;
@@ -20,14 +19,17 @@ public class AutorService {
         this.autorRepository = autorRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Autor> findAll(){
         return this.autorRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Optional<Autor> findById(Integer idAutor){
         return this.autorRepository.findById(idAutor);
     }
 
+    @Transactional(readOnly = true)
     public List<Autor> findByNombre(String nombreAutor){
         return this.autorRepository.findAutorsByNombreAutorStartsWith(nombreAutor);
     }

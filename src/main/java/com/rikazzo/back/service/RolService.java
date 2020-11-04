@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Transactional
 public class RolService {
 
     private final RolRepository rolRepository;
@@ -20,22 +19,22 @@ public class RolService {
         this.rolRepository = rolRepository;
     }
 
+    @Transactional(readOnly = true)
     List<Rol> findAll(){
         return this.rolRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     Set<Rol> findByNombre(String nombre){
         return this.rolRepository.findRolsByNombreRol(nombre);
     }
 
+    @Transactional(readOnly = true)
     Rol findById(Integer idRol){
         return this.rolRepository.findById(idRol).orElse(null);
     }
 
-    Rol agregarRol(Rol rol){
-        return this.rolRepository.save(rol);
-    }
-
+    @Transactional(rollbackFor = Exception.class)
     void eliminarRol(Integer idRol){
         this.rolRepository.deleteById(idRol);
     }

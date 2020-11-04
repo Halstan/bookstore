@@ -1,6 +1,5 @@
 package com.rikazzo.back.controller;
 
-import com.rikazzo.back.entity.Libro;
 import com.rikazzo.back.entity.Usuario;
 import com.rikazzo.back.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;

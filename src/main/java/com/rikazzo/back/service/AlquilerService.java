@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class AlquilerService {
 
     private final AlquilerRepository alquilerRepository;
@@ -23,18 +22,22 @@ public class AlquilerService {
         this.libroRepository = libroRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Alquiler> findAll(){
         return this.alquilerRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Optional<Alquiler> findById(Long idAlquiler){
         return this.alquilerRepository.findById(idAlquiler);
     }
 
+    @Transactional(readOnly = true)
     public List<Alquiler> findAlquilerByIdUsuario(Long idUsuario){
         return this.alquilerRepository.findAlquilersByUsuarioIdUsuario(idUsuario);
     }
 
+    @Transactional(readOnly = true)
     public List<Alquiler> findAlquilerByEstado(boolean estado){
         return this.alquilerRepository.findAlquilersByEstado(estado);
     }

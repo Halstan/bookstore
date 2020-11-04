@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
@@ -20,22 +19,27 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Categoria> findAll(){
         return this.categoriaRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Optional<Categoria> findById(Integer idCategoria){
         return this.categoriaRepository.findById(idCategoria);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Categoria agregarCategoria(Categoria categoria){
         return this.categoriaRepository.save(categoria);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Categoria actualizarCategoria(Categoria categoria){
         return this.categoriaRepository.save(categoria);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void eliminarCategoria(Integer idCategoria){
         this.categoriaRepository.deleteById(idCategoria);
     }

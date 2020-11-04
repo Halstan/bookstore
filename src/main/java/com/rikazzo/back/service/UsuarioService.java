@@ -25,32 +25,39 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Usuario> findAll(){
         return this.usuarioRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Optional<Usuario> findByUsername(String username){
         return this.usuarioRepository.findUsuarioByUsername(username);
     }
 
+    @Transactional(readOnly = true)
     public List<Usuario> findUsuarioByIdSexo(Short idSexo){
         return this.usuarioRepository.findUsuariosBySexoIdSexo(idSexo);
     }
 
+    @Transactional(readOnly = true)
     public List<Usuario> findByNombre(String nombre){
         return this.usuarioRepository.findUsuariosByNombreStartsWith(nombre);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Usuario> findById(Long idUsuario){
         return this.usuarioRepository.findById(idUsuario);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Usuario agregarUsuario(Usuario usuario){
         Set<Rol> roles = this.rolRepository.findRolsByNombreRol("ROLE_USER");
         usuario.setRoles(roles);
         return this.usuarioRepository.save(usuario);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void eliminarUsuario(Long idUsuario){
         this.usuarioRepository.deleteById(idUsuario);
     }
