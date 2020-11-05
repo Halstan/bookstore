@@ -69,4 +69,14 @@ public class LibroService {
         this.libroRepository.deleteById(idLibro);
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void setEstadoFale(Long idLibro){
+        this.libroRepository.setEstadoFalse(idLibro);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void setEstadoTrue(Long idLibro){
+        this.libroRepository.setEstadoTrue(idLibro);
+    }
+
 }

@@ -43,7 +43,6 @@ public class AlquilerService {
     }
 
     public Alquiler agregarAlquiler(Alquiler alquiler){
-        this.libroRepository.setEstadoFalse(alquiler.getLibro().getIdLibro());
         return this.alquilerRepository.save(alquiler);
     }
 

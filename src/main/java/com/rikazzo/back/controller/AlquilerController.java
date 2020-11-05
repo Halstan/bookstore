@@ -2,6 +2,7 @@ package com.rikazzo.back.controller;
 
 import com.rikazzo.back.entity.Alquiler;
 import com.rikazzo.back.service.AlquilerService;
+import com.rikazzo.back.service.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -21,11 +22,13 @@ import java.util.stream.Collectors;
 public class AlquilerController {
 
     private final AlquilerService alquilerService;
+    private final LibroService libroService;
     final String ENCODED = "application/json;charset=UTF-8";
 
     @Autowired
-    public AlquilerController(AlquilerService alquilerService) {
+    public AlquilerController(AlquilerService alquilerService, LibroService libroService) {
         this.alquilerService = alquilerService;
+        this.libroService = libroService;
     }
 
     @GetMapping(produces = ENCODED)
@@ -73,7 +76,7 @@ public class AlquilerController {
     private ResponseEntity<?> agregarAlquiler(@RequestBody @Valid Alquiler alquiler, BindingResult result){
         List<String> errors;
         Map<String, Object> response = new HashMap<>();
-        Alquiler alquiler1 = new Alquiler();
+        Alquiler alquiler1;
 
         if (result.hasErrors()){
             errors = result.getFieldErrors().stream()
@@ -84,10 +87,12 @@ public class AlquilerController {
         }
 
         try{
+            this.libroService.setEstadoFale(alquiler.getLibro().getIdLibro());
             alquiler1 = this.alquilerService.agregarAlquiler(alquiler);
         }catch (DataAccessException e){
-            response.put("Message", "Error al guardar el alquiler de " + alquiler.getUsuario().getNombre() + " en la base de datos");
+            response.put("Message", "Error al guardar el alquiler en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(alquiler1, HttpStatus.CREATED);
     }
@@ -95,16 +100,21 @@ public class AlquilerController {
     @DeleteMapping("{idAlquiler}")
     private ResponseEntity<?> desactivarAlquiler(@PathVariable Long idAlquiler){
         Map<String, Object> response = new HashMap<>();
+        Optional<Alquiler> alquiler = this.alquilerService.findById(idAlquiler);
 
-        try{
-            this.alquilerService.setEstadoFalse(idAlquiler);
-            response.put("Mensaje", "El alquiler ha sido desactivado con éxito");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch (DataAccessException e){
-            response.put("Mensaje", "Error al desactivar el alquiler");
-            response.put("Error", e.getMostSpecificCause().getMessage());
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        if(alquiler.isPresent()){
+            try{
+                this.alquilerService.setEstadoFalse(alquiler.get().getIdAlquiler());
+                this.libroService.setEstadoTrue(alquiler.get().getLibro().getIdLibro());
+                response.put("Mensaje", "El alquiler ha sido desactivado con éxito");
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }catch (DataAccessException e){
+                response.put("Mensaje", "Error al desactivar el alquiler");
+                response.put("Error", e.getMostSpecificCause().getMessage());
+                return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/eliminar/{idAlquiler}")

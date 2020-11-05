@@ -25,7 +25,6 @@ public class Alquiler implements Serializable {
     private Long idAlquiler;
 
     @Column(nullable = false)
-    @NotBlank
     private Date fechaRetorno;
 
     @Column(nullable = false)
@@ -41,4 +40,18 @@ public class Alquiler implements Serializable {
     @JoinColumn(name = "idLibro")
     private Libro libro;
 
+    @PrePersist
+    void init(){
+        estado = true;
+    }
+
+    @Override
+    public String toString() {
+        return "Alquiler{" +
+                "idAlquiler=" + idAlquiler +
+                ", fechaRetorno=" + fechaRetorno +
+                ", fechaCreacion=" + fechaCreacion +
+                ", estado=" + estado +
+                '}';
+    }
 }
