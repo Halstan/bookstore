@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class Autor implements Serializable {
     @NotBlank
     private String apellido;
 
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
 
     @CreationTimestamp
     private Date fechaCreacion;

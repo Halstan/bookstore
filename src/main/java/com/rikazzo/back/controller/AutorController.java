@@ -69,17 +69,19 @@ public class AutorController {
         List<Autor> autores = this.autorService.findByNombre(nombre);
 
         if (autores.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(autores, HttpStatus.OK);
     }
 
     @GetMapping("/{idAutor}")
-    private ResponseEntity<Optional<Autor>> findAutor(@PathVariable Integer idAutor){
+    private ResponseEntity<?> findAutor(@PathVariable Integer idAutor){
         Optional<Autor> autor = this.autorService.findById(idAutor);
+        Map<String, Object> response = new HashMap<>();
 
         if (autor.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            response.put("Error", "Este autor no existe");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(autor, HttpStatus.OK);
     }
