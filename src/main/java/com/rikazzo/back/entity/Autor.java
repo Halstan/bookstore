@@ -29,7 +29,8 @@ public class Autor implements Serializable {
     @NotBlank
     private String nombreAutor;
 
-    @Column(length = 160)
+    @Column(length = 160, nullable = false)
+    @NotBlank
     private String urlFoto;
 
     @Column(length = 40, nullable = false)

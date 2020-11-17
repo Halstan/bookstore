@@ -80,32 +80,42 @@ public class UsuarioController {
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, consumes = ENCODED, produces = ENCODED)
     private ResponseEntity<?> agregarUsuario(@RequestBody @Valid Usuario usuario, BindingResult result){
-
         List<String> errors;
         Map<String, Object> response = new HashMap<>();
         Usuario usuario1;
 
-        if (usuario.getContrasenha().equals(usuario.getAsegurarContrasenha())){
-            if (result.hasErrors()){
-                errors = result.getFieldErrors().stream()
-                        .map(err -> "El campo: " + err.getField() + " " + err.getDefaultMessage())
-                        .collect(Collectors.toList());
-                response.put("Errores", errors);
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            }
-
-            try{
-                usuario1 = this.usuarioService.agregarUsuario(usuario);
-            }catch (DataAccessException e){
-                response.put("Message", "Error al guardar/actualizar al usuario " + usuario.getNombre() + " " + usuario.getApellido() + " en la base de datos");
-                response.put("Error", e.getMostSpecificCause().getMessage());
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            }
-            return new ResponseEntity<>(usuario1, HttpStatus.CREATED);
+        if (result.hasErrors() || !usuario.getContrasenha().equals(usuario.getAsegurarContrasenha())){
+            errors = result.getFieldErrors().stream()
+                    .map(err -> "El campo: " + err.getField() + " " + err.getDefaultMessage())
+                    .collect(Collectors.toList());
+            errors.add("Las contraseñas no coinciden");
+            response.put("Errores", errors);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        response.put("Contraseñas no coinciden", "La contraseña no coincide");
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+
+        try{
+            usuario1 = this.usuarioService.agregarUsuario(usuario);
+        }catch (DataAccessException e){
+            response.put("Message", "Error al guardar/actualizar al usuario " + usuario.getNombre() + " " + usuario.getApellido() + " en la base de datos");
+            response.put("Error", e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(usuario1, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("{idUsuario}")
+    private ResponseEntity<?> eliminarUsuario(@PathVariable Long idUsuario){
+        Map<String, Object> response = new HashMap<>();
+
+        try{
+            this.usuarioService.eliminarUsuario(idUsuario);
+            response.put("Mensaje", "El usuario ha sido eliminado con éxito");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (DataAccessException e){
+            response.put("Mensaje", "Error al eliminar el usuario");
+            response.put("Error", e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

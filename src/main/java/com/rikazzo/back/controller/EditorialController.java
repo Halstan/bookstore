@@ -78,7 +78,7 @@ public class EditorialController {
 
         if (editorial.isPresent()){
             Integer cantidadLibros = editorial.get().getLibros().size();
-            response.put("Cantidad de libros", cantidadLibros);
+            response.put("CantidadLibros", cantidadLibros);
             response.put("Editorial", editorial.get());
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
@@ -90,7 +90,7 @@ public class EditorialController {
     private ResponseEntity<?> controlarEditorial(@RequestBody @Valid Editorial editorial, BindingResult result){
         List<String> errors;
         Map<String, Object> response = new HashMap<>();
-        Editorial editorial1 = new Editorial();
+        Editorial editorial1;
 
         if (result.hasErrors()){
             errors = result.getFieldErrors().stream()
@@ -132,7 +132,7 @@ public class EditorialController {
 
         try {
             this.editorialService.eliminarEditorial(idEditorial);
-            response.put("Mensaje", "La editorial ha sido eliminar con éxito");
+            response.put("Mensaje", "La editorial ha sido eliminada con éxito");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (DataAccessException e){
             response.put("Mensaje", "Error al eliminar a la editorial");

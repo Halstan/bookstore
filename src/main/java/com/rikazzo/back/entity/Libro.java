@@ -10,7 +10,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -28,10 +30,12 @@ public class Libro {
 
     @ManyToOne
     @JoinColumn(name = "idCategoria", nullable = false)
+    @NotNull
     private Categoria categoria;
 
     @ManyToOne
     @JoinColumn(name = "idEditorial", nullable = false)
+    @NotNull
     private Editorial editorial;
 
     @Column(length = 80, nullable = false)
@@ -39,7 +43,9 @@ public class Libro {
     @NotBlank
     private String nombreLibro;
 
-    @Column(length = 200)
+    @Column(length = 200, nullable = false)
+    @Size(max = 200)
+    @NotBlank
     private String descripcion;
 
     @Column(length = 150, nullable = false)
@@ -50,13 +56,13 @@ public class Libro {
     private String isbn;
 
     @Column(nullable = false)
-    private Date fechaPublicacion;
+    private LocalDate fechaPublicacion;
 
     @CreationTimestamp
-    private Date fechaCreacion;
+    private LocalDate fechaCreacion;
 
     @UpdateTimestamp
-    private Date fechaActualizacion;
+    private LocalDate fechaActualizacion;
 
     private Double precio;
 

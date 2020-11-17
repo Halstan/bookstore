@@ -9,10 +9,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -26,15 +26,18 @@ public class Editorial implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEditorial;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
+    @Size(min = 5, max = 50)
+    @NotBlank
     private String nombreEditorial;
 
     @Column(length = 50, nullable = false)
+    @Size(min = 5, max = 50)
     @NotBlank
     private String fundador;
 
     @Column(nullable = false)
-    private Date fechaFundacion;
+    private LocalDate fechaFundacion;
 
     @CreationTimestamp
     private LocalDateTime fechaCreacion;
