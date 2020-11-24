@@ -73,7 +73,7 @@ public class AlquilerController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping( method = {RequestMethod.POST, RequestMethod.PUT}, produces = ENCODED, consumes = ENCODED)
+    @PostMapping(produces = ENCODED, consumes = ENCODED)
     private ResponseEntity<?> agregarAlquiler(@RequestBody @Valid Alquiler alquiler, BindingResult result){
         List<String> errors;
         Map<String, Object> response = new HashMap<>();

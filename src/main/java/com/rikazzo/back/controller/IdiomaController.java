@@ -33,15 +33,12 @@ public class IdiomaController {
 
     @GetMapping(produces = ENCODED)
     private ResponseEntity<?> findAll(){
-        Map<String, Object> response = new HashMap<>();
         List<Idioma> idiomas = this.idiomaService.findAll();
 
         if (idiomas.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        response.put("Cantidad de idiomas", idiomas.size());
-        response.put("Idiomas", idiomas);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(idiomas, HttpStatus.OK);
     }
 
     @GetMapping(value = "{idIdioma}", produces = ENCODED)

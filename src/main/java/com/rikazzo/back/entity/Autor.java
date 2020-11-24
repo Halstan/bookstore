@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
@@ -31,6 +32,7 @@ public class Autor implements Serializable {
 
     @Column(length = 160, nullable = false)
     @NotBlank
+    @Size(min = 30, max = 160)
     private String urlFoto;
 
     @Column(length = 40, nullable = false)

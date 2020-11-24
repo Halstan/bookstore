@@ -3,15 +3,11 @@ package com.rikazzo.back.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.val;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -25,19 +21,21 @@ public class Alquiler implements Serializable {
     private Long idAlquiler;
 
     @Column(nullable = false)
-    private Date fechaRetorno;
+    private LocalDate fechaRetorno;
 
     @Column(nullable = false)
-    private Date fechaCreacion;
+    private LocalDate fechaCreacion;
 
     private boolean estado;
 
     @ManyToOne
-    @JoinColumn(name = "idUsuario")
+    @JoinColumn(name = "idUsuario", nullable = false)
+    @NotNull
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "idLibro")
+    @JoinColumn(name = "idLibro", nullable = false)
+    @NotNull
     private Libro libro;
 
     @PrePersist
