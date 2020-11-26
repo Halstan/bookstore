@@ -28,7 +28,7 @@ public class Idioma {
     @Size(min = 5, max = 30)
     private String nombreIdioma;
 
-    @OneToMany(mappedBy = "idioma")
+    @OneToMany(mappedBy = "idioma", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Libro> libros;
 

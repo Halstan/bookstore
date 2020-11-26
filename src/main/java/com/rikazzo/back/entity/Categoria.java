@@ -25,7 +25,7 @@ public class Categoria implements Serializable {
     @NotBlank
     private String nombreCategoria;
 
-    @OneToMany(mappedBy = "categoria")
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Libro> libros;
 

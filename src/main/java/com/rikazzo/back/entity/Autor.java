@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -39,12 +40,16 @@ public class Autor implements Serializable {
     @NotBlank
     private String apellido;
 
+    @Column(length = 300)
+    @Size(min = 20, max = 300)
+    private String biografia;
+
     private LocalDate fechaNacimiento;
 
-    @CreationTimestamp
-    private Date fechaCreacion;
+    @UpdateTimestamp
+    private Date fechaModificacion;
 
-    @OneToMany(mappedBy = "autor")
+    @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Libro> libros;
 

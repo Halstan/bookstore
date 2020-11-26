@@ -27,7 +27,7 @@ public class Sexo implements Serializable {
     @Size(min = 3, max = 30)
     private String nombreSexo;
 
-    @OneToMany(mappedBy = "sexo")
+    @OneToMany(mappedBy = "sexo", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Usuario> usuarios;
 

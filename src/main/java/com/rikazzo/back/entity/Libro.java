@@ -68,7 +68,7 @@ public class Libro {
 
     private Boolean estado;
 
-    @OneToMany(mappedBy = "libro")
+    @OneToMany(mappedBy = "libro", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Alquiler> alquileres;
 

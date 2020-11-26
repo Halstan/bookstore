@@ -45,7 +45,7 @@ public class Editorial implements Serializable {
     @NotNull
     private boolean estado;
 
-    @OneToMany(mappedBy = "editorial")
+    @OneToMany(mappedBy = "editorial", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Libro> libros;
 

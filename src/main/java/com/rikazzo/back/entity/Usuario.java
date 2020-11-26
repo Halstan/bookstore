@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -26,19 +27,26 @@ public class Usuario implements Serializable {
 
     @Column(length = 40, nullable = false)
     @NotBlank
+    @Size(min = 5, max = 40)
     private String nombre;
 
     @Column(length = 60)
+    @Size(min = 10, max = 60)
     private String apellido;
 
-    @Column(length = 40, unique = true)
+    @Column(length = 40, unique = true, nullable = false)
+    @NotBlank
+    @Size(min = 8, max = 40)
     private String username;
 
     @Column(length = 100, nullable = false)
     @NotBlank
+    @Size(min = 8, max = 20)
     private String contrasenha;
 
     @Transient
+    @Size(min = 8, max = 20)
+    @NotBlank
     private String asegurarContrasenha;
 
     @CreationTimestamp
@@ -47,11 +55,11 @@ public class Usuario implements Serializable {
     private boolean activado;
 
     @ManyToOne
-    @JoinColumn(name = "idSexo")
+    @JoinColumn(name = "idSexo", nullable = false)
     private Sexo sexo;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<Alquiler> alquileres;
 
     @ManyToMany
