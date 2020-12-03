@@ -39,6 +39,10 @@ public class Usuario implements Serializable {
     @Size(min = 8, max = 40)
     private String username;
 
+    @Column(length = 70, unique = true)
+    @Size(min = 10, max = 70)
+    private String correo;
+
     @Column(length = 100, nullable = false)
     @NotBlank
     @Size(min = 8, max = 20)
