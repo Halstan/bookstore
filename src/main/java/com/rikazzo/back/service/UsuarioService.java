@@ -36,8 +36,8 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public List<Usuario> findUsuarioByIdSexo(Short idSexo){
-        return this.usuarioRepository.findUsuariosBySexoIdSexo(idSexo);
+    public List<Usuario> findUsuarioByIdSexo(String sexo){
+        return this.usuarioRepository.findUsuariosBySexo(sexo);
     }
 
     @Transactional(readOnly = true)
@@ -48,6 +48,11 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public Optional<Usuario> findById(Long idUsuario){
         return this.usuarioRepository.findById(idUsuario);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Usuario> getUsername(String username){
+        return this.usuarioRepository.getUsernameByUsernameProvided(username);
     }
 
     @Transactional(rollbackFor = Exception.class)

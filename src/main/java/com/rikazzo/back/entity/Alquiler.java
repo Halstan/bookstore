@@ -3,6 +3,7 @@ package com.rikazzo.back.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,7 +24,7 @@ public class Alquiler implements Serializable {
     @Column(nullable = false)
     private LocalDate fechaRetorno;
 
-    @Column(nullable = false)
+    @UpdateTimestamp
     private LocalDate fechaCreacion;
 
     private boolean estado;

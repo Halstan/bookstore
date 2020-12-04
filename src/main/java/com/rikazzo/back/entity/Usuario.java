@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -53,14 +54,13 @@ public class Usuario implements Serializable {
     @NotBlank
     private String asegurarContrasenha;
 
-    @CreationTimestamp
-    private Date fechaCreacion;
+    @UpdateTimestamp
+    private Date fechaModificacion;
 
     private boolean activado;
 
-    @ManyToOne
-    @JoinColumn(name = "idSexo", nullable = false)
-    private Sexo sexo;
+    @Column(length = 15, nullable = false)
+    private String sexo;
 
     @JsonIgnore
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)

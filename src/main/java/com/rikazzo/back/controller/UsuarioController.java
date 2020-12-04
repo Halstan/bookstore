@@ -17,7 +17,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RequestMapping("api/usuarios")
 public class UsuarioController {
 
@@ -65,10 +64,10 @@ public class UsuarioController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/sexo/{idSexo}", produces = ENCODED)
-    private ResponseEntity<?> findBySexo(@PathVariable Short idSexo){
+    @GetMapping(value = "/sexo/{sexo}", produces = ENCODED)
+    private ResponseEntity<?> findBySexo(@PathVariable String sexo){
         Map<String, Object> response = new HashMap<>();
-        List<Usuario> usuarios = this.usuarioService.findUsuarioByIdSexo(idSexo);
+        List<Usuario> usuarios = this.usuarioService.findUsuarioByIdSexo(sexo);
 
         if (usuarios.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -76,6 +75,15 @@ public class UsuarioController {
         response.put("Cantidad de usuarios", usuarios.size());
         response.put("Usuarios", usuarios);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/username/{username}", produces = ENCODED)
+    private ResponseEntity<?> getUsername(@PathVariable String username){
+        Optional<Usuario> usuario = this.usuarioService.findByUsername(username);
+        if (usuario.isPresent()){
+            return new ResponseEntity<>(usuario, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, consumes = ENCODED, produces = ENCODED)
