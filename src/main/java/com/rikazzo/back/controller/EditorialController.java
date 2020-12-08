@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/editoriales")
+@RequestMapping("editoriales")
 public class EditorialController {
 
     private final EditorialService editorialService;

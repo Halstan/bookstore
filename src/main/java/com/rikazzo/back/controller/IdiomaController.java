@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/idiomas")
+@RequestMapping("idiomas")
 public class IdiomaController {
 
     private final IdiomaService idiomaService;

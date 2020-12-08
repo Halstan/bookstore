@@ -46,11 +46,11 @@ public class Usuario implements Serializable {
 
     @Column(length = 100, nullable = false)
     @NotBlank
-    @Size(min = 8, max = 20)
+    @Size(min = 8, max = 90)
     private String contrasenha;
 
     @Transient
-    @Size(min = 8, max = 20)
+    @Size(min = 8, max = 90)
     @NotBlank
     private String asegurarContrasenha;
 

@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/autores")
+@RequestMapping("autores")
 public class AutorController {
 
     private final AutorService autorService;

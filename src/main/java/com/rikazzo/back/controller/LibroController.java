@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/libros")
+@RequestMapping("libros")
 public class LibroController {
 
     private final LibroService libroService;

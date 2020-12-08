@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/usuarios")
+@RequestMapping("usuarios")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;

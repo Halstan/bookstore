@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/alquileres")
+@RequestMapping("alquileres")
 public class AlquilerController {
 
     private final AlquilerService alquilerService;
