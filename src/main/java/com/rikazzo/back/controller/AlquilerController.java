@@ -41,9 +41,9 @@ public class AlquilerController {
         return new ResponseEntity<>(alquilers, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/usuario/{idUsuario}", produces = ENCODED)
-    private ResponseEntity<List<Alquiler>> findByIdUsuario(@PathVariable Long idUsuario){
-        List<Alquiler> alquilers = this.alquilerService.findAlquilerByIdUsuario(idUsuario);
+    @GetMapping(value = "/usuario/{username}", produces = ENCODED)
+    private ResponseEntity<List<Alquiler>> findByUsername(@PathVariable String username){
+        List<Alquiler> alquilers = this.alquilerService.findAlquilerByUsername(username);
 
         if(alquilers.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

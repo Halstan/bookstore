@@ -33,8 +33,8 @@ public class AlquilerService {
     }
 
     @Transactional(readOnly = true)
-    public List<Alquiler> findAlquilerByIdUsuario(Long idUsuario){
-        return this.alquilerRepository.findAlquilersByUsuarioIdUsuario(idUsuario);
+    public List<Alquiler> findAlquilerByUsername(String username){
+        return this.alquilerRepository.findAlquilersByUsuarioUsername(username);
     }
 
     @Transactional(readOnly = true)

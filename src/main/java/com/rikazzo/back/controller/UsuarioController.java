@@ -67,7 +67,7 @@ public class UsuarioController {
     @GetMapping(value = "/sexo/{sexo}", produces = ENCODED)
     private ResponseEntity<?> findBySexo(@PathVariable String sexo){
         Map<String, Object> response = new HashMap<>();
-        List<Usuario> usuarios = this.usuarioService.findUsuarioByIdSexo(sexo);
+        List<Usuario> usuarios = this.usuarioService.findUsuarioBySexo(sexo);
 
         if (usuarios.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

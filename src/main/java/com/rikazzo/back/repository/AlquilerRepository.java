@@ -12,10 +12,10 @@ import java.util.List;
 public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
 
     /**
-     * Filtra los alquileres por el id del usuario
-     * @param idUsuario Es el id del usuario
+     * Filtra los alquileres por el nombre de usuario del usuario
+     * @param username Es el nombre de usuario del usuario
      * */
-    List<Alquiler> findAlquilersByUsuarioIdUsuario(Long idUsuario);
+    List<Alquiler> findAlquilersByUsuarioUsername(String username);
 
     /**
      * Filtra los alquileres por el estado de estos

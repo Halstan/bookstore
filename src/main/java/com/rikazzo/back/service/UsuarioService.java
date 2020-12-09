@@ -46,7 +46,7 @@ public class UsuarioService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public List<Usuario> findUsuarioByIdSexo(String sexo){
+    public List<Usuario> findUsuarioBySexo(String sexo){
         return this.usuarioRepository.findUsuariosBySexo(sexo);
     }
 
@@ -87,6 +87,6 @@ public class UsuarioService implements UserDetailsService {
                             rol.getNombreRol())).collect(Collectors.toList()));
 
         }
-        throw new UsernameNotFoundException("UserName is not Found");
+        throw new UsernameNotFoundException("Username is not Found");
     }
 }
