@@ -86,7 +86,7 @@ public class UsuarioController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, consumes = ENCODED, produces = ENCODED)
+    @PostMapping(consumes = ENCODED, produces = ENCODED)
     private ResponseEntity<?> agregarUsuario(@RequestBody @Valid Usuario usuario, BindingResult result){
         List<String> errors;
         Map<String, Object> response = new HashMap<>();
@@ -104,7 +104,47 @@ public class UsuarioController {
         try{
             usuario1 = this.usuarioService.agregarUsuario(usuario);
         }catch (DataAccessException e){
-            response.put("Message", "Error al guardar/actualizar al usuario " + usuario.getNombre() + " " + usuario.getApellido() + " en la base de datos");
+            response.put("Message", "Error al actualizar al usuario " + usuario.getNombre() + " " + usuario.getApellido() + " en la base de datos");
+            response.put("Error", e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(usuario1, HttpStatus.CREATED);
+    }
+
+    @PutMapping(consumes = ENCODED, produces = ENCODED)
+    private ResponseEntity<?> actualizarUsuario(@RequestBody @Valid Usuario usuario, BindingResult result){
+        List<String> errors;
+        Map<String, Object> response = new HashMap<>();
+
+        if (result.hasErrors() || !usuario.getContrasenha().equals(usuario.getAsegurarContrasenha())){
+            errors = result.getFieldErrors().stream()
+                    .map(err -> "El campo: " + err.getField() + " " + err.getDefaultMessage())
+                    .collect(Collectors.toList());
+            errors.add("Las contraseñas no coinciden");
+            response.put("Errores", errors);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        try{
+            this.usuarioService.actualizarUsuario(usuario);
+        }catch (DataAccessException e){
+            response.put("Message", "Error al actualizar al usuario " + usuario.getNombre() + " " + usuario.getApellido() + " en la base de datos");
+            response.put("Error", e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(usuario, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "admin", consumes = ENCODED, produces = ENCODED)
+    private ResponseEntity<?> actualizarUsuarioAdmin(@RequestBody @Valid Usuario usuario){
+
+        Usuario usuario1;
+        Map<String, Object> response = new HashMap<>();
+
+        try{
+            usuario1 = this.usuarioService.actualizarUsuarioAdmin(usuario);
+        }catch (DataAccessException e){
+            response.put("Message", "Error al actualizar al usuario " + usuario.getNombre() + " " + usuario.getApellido() + " en la base de datos");
             response.put("Error", e.getMostSpecificCause().getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }

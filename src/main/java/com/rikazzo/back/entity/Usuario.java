@@ -51,7 +51,6 @@ public class Usuario implements Serializable {
 
     @Transient
     @Size(min = 8, max = 90)
-    @NotBlank
     private String asegurarContrasenha;
 
     @UpdateTimestamp
@@ -75,6 +74,11 @@ public class Usuario implements Serializable {
 
     @PrePersist
     void init() {
+        activado = true;
+    }
+
+    @PreUpdate
+    void update() {
         activado = true;
     }
 }

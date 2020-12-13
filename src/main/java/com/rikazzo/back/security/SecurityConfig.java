@@ -2,7 +2,6 @@ package com.rikazzo.back.security;
 
 import com.rikazzo.back.security.jwt.JwtFilterRequest;
 import com.rikazzo.back.service.UsuarioService;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -57,12 +56,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 /*----------------------------------------------------------------------------------------------------------------------------*/
                 /*-------------------------------  -------------------------------*/
                 .antMatchers(HttpMethod.GET,"/alquileres/usuario/{username}").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
-                .antMatchers(HttpMethod.PUT,"/usuarios").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/alquileres").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/usuarios").hasAnyRole("BIBLIOTECARIO", "ADMIN")
+                //--------------------------- CRU USUARIO ---------------------------
+                .antMatchers(HttpMethod.PUT,"/usuarios").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.GET,"/usuarios/username/{username}").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/usuarios").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/usuarios/admin").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/usuarios/{idUsuario}").hasAnyRole("BIBLIOTECARIO", "ADMIN")
+
+                .antMatchers(HttpMethod.GET,"/roles").hasRole("ADMIN")
 
                 //--------------------------- CRU CATEGORIA ---------------------------
-                .antMatchers(HttpMethod.GET, "/usuarios/{idUsuario}").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/categorias").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/categorias").hasRole("ADMIN")
 
@@ -86,9 +91,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //--------------------------- CRU EDITORIAL ---------------------------
                 .antMatchers(HttpMethod.GET, "/editoriales").hasAnyRole("BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/editoriales/{idEditorial}").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/editoriales").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/editoriales").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/editoriales").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/editoriales/eliminar/{idEditorial}").hasAnyRole("ADMIN")
 
                 //--------------------------- CRUD LIBRO ---------------------------
@@ -100,7 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 /*-------------------------------  -------------------------------*/
                 .antMatchers(HttpMethod.DELETE, "/libros/{idLibro}", "/alquileres/eliminar/{idAlquiler}",
-                        "/autores/{idAutor}", "/editoriales/eliminar/{idEditorial}",
+                        "/autores/{idAutor}", "/editoriales/eliminar/{idEditorial}", "/editoriales/{idEditorial}",
                         "/categorias/{idCategoria}", "/usuarios/{idUsuario}").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()

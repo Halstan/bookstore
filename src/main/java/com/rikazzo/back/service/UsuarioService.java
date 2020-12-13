@@ -5,18 +5,15 @@ import com.rikazzo.back.entity.Usuario;
 import com.rikazzo.back.repository.RolRepository;
 import com.rikazzo.back.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -64,6 +61,20 @@ public class UsuarioService implements UserDetailsService {
     public Usuario agregarUsuario(Usuario usuario){
         Set<Rol> roles = this.rolRepository.findRolsByNombreRol("ROLE_USER");
         usuario.setRoles(roles);
+        usuario.setContrasenha(new BCryptPasswordEncoder().encode(usuario.getContrasenha()));
+        return this.usuarioRepository.save(usuario);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void actualizarUsuario(Usuario usuario){
+        usuario.setContrasenha(new BCryptPasswordEncoder().encode(usuario.getContrasenha()));
+
+        this.usuarioRepository.updateUsuario(usuario.getNombre(), usuario.getApellido(), usuario.getContrasenha(),
+                usuario.getCorreo(), usuario.getSexo(), usuario.getUsername(), usuario.getIdUsuario());
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Usuario actualizarUsuarioAdmin(Usuario usuario){
         usuario.setContrasenha(new BCryptPasswordEncoder().encode(usuario.getContrasenha()));
         return this.usuarioRepository.save(usuario);
     }
