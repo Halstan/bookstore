@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -56,7 +55,7 @@ public class Usuario implements Serializable {
     @UpdateTimestamp
     private Date fechaModificacion;
 
-    private boolean activado;
+    private Boolean activado;
 
     @Column(length = 15, nullable = false)
     private String sexo;

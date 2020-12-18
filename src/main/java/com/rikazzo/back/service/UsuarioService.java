@@ -90,7 +90,7 @@ public class UsuarioService implements UserDetailsService {
         if(usuario.isPresent()){
             return new User(usuario.get().getUsername(),
                     usuario.get().getContrasenha(),
-                    true,
+                    usuario.get().getActivado(),
                     true,
                     true,
                     true,

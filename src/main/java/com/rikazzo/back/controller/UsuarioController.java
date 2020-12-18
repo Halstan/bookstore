@@ -136,10 +136,20 @@ public class UsuarioController {
     }
 
     @PutMapping(value = "admin", consumes = ENCODED, produces = ENCODED)
-    private ResponseEntity<?> actualizarUsuarioAdmin(@RequestBody @Valid Usuario usuario){
+    private ResponseEntity<?> actualizarUsuarioAdmin(@RequestBody @Valid Usuario usuario, BindingResult result){
 
+        List<String> errors;
         Usuario usuario1;
         Map<String, Object> response = new HashMap<>();
+
+        if (result.hasErrors()){
+            errors = result.getFieldErrors().stream()
+                    .map(err -> "El campo: " + err.getField() + " " + err.getDefaultMessage())
+                    .collect(Collectors.toList());
+            errors.add("Las contraseñas no coinciden");
+            response.put("Errores", errors);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
 
         try{
             usuario1 = this.usuarioService.actualizarUsuarioAdmin(usuario);

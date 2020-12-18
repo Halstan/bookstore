@@ -3,6 +3,7 @@ package com.rikazzo.back.security.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -11,10 +12,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component()
+@Component
 public class JwtUtil {
 
-    private static final String KEY = "pl4tz1";
+    @Value("{spring.jwt.key}")
+    private String KEY;
 
     public String generateToken(UserDetails userDetails) {
 
