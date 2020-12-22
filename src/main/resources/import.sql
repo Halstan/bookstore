@@ -11,7 +11,14 @@ insert into roles(nombre_rol) values ('ROLE_ADMIN');
 insert into roles(nombre_rol) values ('ROLE_BIBLIOTECARIO');
 
 insert into usuarios(activado, apellido, contrasenha, correo, fecha_modificacion, nombre, sexo, username)
-    values (true, 'Arauco Belahonia', '$2a$10$M1cc7lYCzrQUfQaK0C6RfeEYR0p1GFg1I1Up6gQVlJWHys1JyZxzi', 'enzoarauco@gmail.com', now(), 'Enzo Daniel', 'halstan483', 'Masculino');
+    values (TRUE,
+            'Arauco Belahonia',
+            '$2a$10$M1cc7lYCzrQUfQaK0C6RfeEYR0p1GFg1I1Up6gQVlJWHys1JyZxzi',
+            'enzoarauco@gmail.com',
+            '2020-12-21',
+            'Enzo Daniel',
+            'Masculino',
+            'halstan483');
 
 insert into usuario_rol (id_usuario, id_rol) values(1,2);
 insert into usuario_rol (id_usuario, id_rol) values(1,3);
