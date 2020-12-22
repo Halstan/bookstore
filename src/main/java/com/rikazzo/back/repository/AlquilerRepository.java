@@ -27,7 +27,7 @@ public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
      * Actualiza el estado del alquiler a false para indicar que ha sido cancelado
      * @param idAlquiler es el id del libro provisto
      * */
-    @Query(value = "update alquileres set estado = 0 where id_alquiler = :idAlquiler", nativeQuery = true)
+    @Query(value = "update alquileres set estado = FALSE where id_alquiler = :idAlquiler", nativeQuery = true)
     @Modifying
     @Transactional
     void setEstadoFalse(@Param("idAlquiler") Long idAlquiler);
