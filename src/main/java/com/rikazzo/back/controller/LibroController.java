@@ -30,15 +30,12 @@ public class LibroController {
 
     @GetMapping(produces = ENCODED)
     private ResponseEntity<?> findAll(){
-        Map<String, Object> response = new HashMap<>();
         List<Libro> libros = this.libroService.findAll();
 
         if (libros.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        response.put("Cantidad de libros", libros.size());
-        response.put("Libros", libros);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(libros, HttpStatus.OK);
     }
 
     @GetMapping(value = "estado/{estado}", produces = ENCODED)

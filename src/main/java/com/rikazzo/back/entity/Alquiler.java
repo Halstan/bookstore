@@ -27,7 +27,7 @@ public class Alquiler implements Serializable {
     @UpdateTimestamp
     private LocalDate fechaCreacion;
 
-    private boolean estado;
+    private Boolean estado;
 
     @ManyToOne
     @JoinColumn(name = "idUsuario", nullable = false)
