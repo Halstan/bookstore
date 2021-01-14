@@ -39,6 +39,9 @@ public class Alquiler implements Serializable {
     @NotNull
     private Libro libro;
 
+    @OneToOne(mappedBy = "alquiler")
+    private DetalleAlquiler detalleAlquiler;
+
     @PrePersist
     void init(){
         estado = true;

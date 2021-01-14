@@ -1,8 +1,9 @@
 package com.rikazzo.back.service;
 
 import com.rikazzo.back.entity.Alquiler;
+import com.rikazzo.back.entity.DetalleAlquiler;
 import com.rikazzo.back.repository.AlquilerRepository;
-import com.rikazzo.back.repository.LibroRepository;
+import com.rikazzo.back.repository.DetalleAlquilerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +15,12 @@ import java.util.Optional;
 public class AlquilerService {
 
     private final AlquilerRepository alquilerRepository;
-    private final LibroRepository libroRepository;
+    private final DetalleAlquilerRepository detalleAlquilerRepository;
 
     @Autowired
-    public AlquilerService(AlquilerRepository alquilerRepository, LibroRepository libroRepository) {
+    public AlquilerService(AlquilerRepository alquilerRepository, DetalleAlquilerRepository detalleAlquilerRepository) {
         this.alquilerRepository = alquilerRepository;
-        this.libroRepository = libroRepository;
+        this.detalleAlquilerRepository = detalleAlquilerRepository;
     }
 
     @Transactional(readOnly = true)
@@ -43,6 +44,12 @@ public class AlquilerService {
     }
 
     public Alquiler agregarAlquiler(Alquiler alquiler){
+        if (alquiler.getLibro().getPrecio() != null){
+            DetalleAlquiler detalleAlquiler = new DetalleAlquiler();
+            detalleAlquiler.setTotal(alquiler.getLibro().getPrecio());
+            detalleAlquiler.setAlquiler(alquiler);
+            this.detalleAlquilerRepository.save(detalleAlquiler);
+        }
         return this.alquilerRepository.save(alquiler);
     }
 
