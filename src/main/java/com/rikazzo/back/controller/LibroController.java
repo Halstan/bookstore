@@ -4,6 +4,9 @@ import com.rikazzo.back.entity.Libro;
 import com.rikazzo.back.service.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -36,6 +39,22 @@ public class LibroController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(libros, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "page/{page}", produces = ENCODED)
+    private Page<Libro> findAllPaginated(@PathVariable Integer page){
+        Pageable pageable = PageRequest.of(page, 6);
+        return this.libroService.findAllPaginated(pageable);
+    }
+
+    @GetMapping(value = "isbn/{isbn}")
+    private ResponseEntity<Optional<Libro>> findByIsbn(@PathVariable String isbn){
+        Optional<Libro> libro = this.libroService.findByIsbn(isbn);
+
+        if(libro.isPresent()){
+            return new ResponseEntity<>(libro, HttpStatus.OK);
+        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
     @GetMapping(value = "estado/{estado}", produces = ENCODED)

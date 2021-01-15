@@ -97,11 +97,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/editoriales/eliminar/{idEditorial}").hasAnyRole("ADMIN")
 
                 //--------------------------- CRUD LIBRO ---------------------------
+                .antMatchers(HttpMethod.GET, "/libros/page/{page}").hasAnyRole("BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/libros/isbn/{isbn}").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/libros").hasAnyRole("BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.PUT, "/libros").hasAnyRole("BIBLIOTECARIO", "ADMIN")
 
                 //------------------------------
                 .antMatchers(HttpMethod.GET, "/alquileres").hasAnyRole("BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/alquileres/page/{page}").hasAnyRole("BIBLIOTECARIO", "ADMIN")
 
                 /*-------------------------------  -------------------------------*/
                 .antMatchers(HttpMethod.DELETE, "/libros/{idLibro}", "/alquileres/eliminar/{idAlquiler}",

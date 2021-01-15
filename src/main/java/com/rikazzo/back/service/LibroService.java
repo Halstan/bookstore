@@ -3,6 +3,8 @@ package com.rikazzo.back.service;
 import com.rikazzo.back.entity.Libro;
 import com.rikazzo.back.repository.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,11 @@ public class LibroService {
     @Transactional(readOnly = true)
     public List<Libro> findAll(){
         return this.libroRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Libro> findAllPaginated(Pageable pageable){
+        return this.libroRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)
@@ -57,6 +64,11 @@ public class LibroService {
     @Transactional(rollbackFor = Exception.class)
     public Libro agregarLibro(Libro libro){
         return this.libroRepository.save(libro);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Libro> findByIsbn(String isbn){
+        return this.libroRepository.findLibroByIsbn(isbn);
     }
 
     @Transactional(rollbackFor = Exception.class)

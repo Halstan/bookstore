@@ -5,6 +5,8 @@ import com.rikazzo.back.entity.DetalleAlquiler;
 import com.rikazzo.back.repository.AlquilerRepository;
 import com.rikazzo.back.repository.DetalleAlquilerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,11 @@ public class AlquilerService {
     @Transactional(readOnly = true)
     public List<Alquiler> findAll(){
         return this.alquilerRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Alquiler> findAllPaginated(Pageable pageable){
+        return this.alquilerRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)

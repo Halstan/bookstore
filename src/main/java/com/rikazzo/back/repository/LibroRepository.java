@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LibroRepository extends JpaRepository<Libro, Long> {
 
@@ -39,6 +40,12 @@ public interface LibroRepository extends JpaRepository<Libro, Long> {
      * @param idCategoria es el id de la categoría provista
      * */
     List<Libro> findLibrosByCategoriaIdCategoria(Integer idCategoria);
+
+    /**
+     * Busca el libro por el ISBN proveido
+     * @param isbn es el identificador único de cada libro
+     * */
+    Optional<Libro> findLibroByIsbn(String isbn);
 
     /**
      * Actualiza el estado del libro a false para indicar que ha sido prestado
