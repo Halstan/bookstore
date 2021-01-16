@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -40,7 +39,7 @@ public class Editorial implements Serializable {
     private LocalDate fechaFundacion;
 
     @CreationTimestamp
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
 
     @NotNull
     private boolean estado;
