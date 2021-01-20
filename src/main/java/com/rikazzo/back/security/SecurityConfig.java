@@ -55,13 +55,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**").permitAll()
                 /*----------------------------------------------------------------------------------------------------------------------------*/
                 /*-------------------------------  -------------------------------*/
-                .antMatchers(HttpMethod.GET,"/alquileres/usuario/{username}").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/alquileres").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.GET,"/alquileres/usuario/{username}").hasAnyRole("LECTOR", "BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/alquileres").hasAnyRole("LECTOR", "BIBLIOTECARIO", "ADMIN")
 
                 //--------------------------- CRU USUARIO ---------------------------
-                .antMatchers(HttpMethod.PUT,"/usuarios").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
-                .antMatchers(HttpMethod.GET,"/usuarios/username/{username}").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
-                .antMatchers(HttpMethod.PUT, "/usuarios").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.PUT,"/usuarios").hasAnyRole("LECTOR", "BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.GET,"/usuarios/username/{username}").hasAnyRole("LECTOR", "BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/usuarios").hasAnyRole("LECTOR", "BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.PUT, "/usuarios/admin").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/usuarios/{idUsuario}").hasAnyRole("BIBLIOTECARIO", "ADMIN")
 
@@ -98,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //--------------------------- CRUD LIBRO ---------------------------
                 .antMatchers(HttpMethod.GET, "/libros/page/{page}").hasAnyRole("BIBLIOTECARIO", "ADMIN")
-                .antMatchers(HttpMethod.GET, "/libros/isbn/{isbn}").hasAnyRole("USER", "BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/libros/isbn/{isbn}").hasAnyRole("LECTOR", "BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/libros").hasAnyRole("BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.PUT, "/libros").hasAnyRole("BIBLIOTECARIO", "ADMIN")
 

@@ -59,7 +59,7 @@ public class UsuarioService implements UserDetailsService {
 
     @Transactional(rollbackFor = Exception.class)
     public Usuario agregarUsuario(Usuario usuario){
-        Set<Rol> roles = this.rolRepository.findRolsByNombreRol("ROLE_USER");
+        Set<Rol> roles = this.rolRepository.findRolsByNombreRol("ROLE_LECTOR");
         usuario.setRoles(roles);
         usuario.setContrasenha(new BCryptPasswordEncoder().encode(usuario.getContrasenha()));
         return this.usuarioRepository.save(usuario);

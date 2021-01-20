@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -45,9 +46,9 @@ public class Libro {
     @NotBlank
     private String descripcion;
 
-    @Column(length = 150, nullable = false)
+    @Column(name = "urlPortada", length = 150, nullable = false)
     @Size(min = 30, max = 150)
-    private String urlPortada;
+    private String portada;
 
     @Column(length = 30, unique = true)
     private String isbn;
@@ -56,12 +57,15 @@ public class Libro {
     private LocalDate fechaPublicacion;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDate fechaCreacion;
 
     @UpdateTimestamp
     private LocalDate fechaActualizacion;
 
     private Double precio;
+
+    private Date fechaVigencia;
 
     private Boolean estado;
 

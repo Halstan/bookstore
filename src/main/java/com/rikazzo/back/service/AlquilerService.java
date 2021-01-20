@@ -1,15 +1,14 @@
 package com.rikazzo.back.service;
 
 import com.rikazzo.back.entity.Alquiler;
-import com.rikazzo.back.entity.DetalleAlquiler;
 import com.rikazzo.back.repository.AlquilerRepository;
-import com.rikazzo.back.repository.DetalleAlquilerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,12 +16,10 @@ import java.util.Optional;
 public class AlquilerService {
 
     private final AlquilerRepository alquilerRepository;
-    private final DetalleAlquilerRepository detalleAlquilerRepository;
 
     @Autowired
-    public AlquilerService(AlquilerRepository alquilerRepository, DetalleAlquilerRepository detalleAlquilerRepository) {
+    public AlquilerService(AlquilerRepository alquilerRepository) {
         this.alquilerRepository = alquilerRepository;
-        this.detalleAlquilerRepository = detalleAlquilerRepository;
     }
 
     @Transactional(readOnly = true)
@@ -51,11 +48,11 @@ public class AlquilerService {
     }
 
     public Alquiler agregarAlquiler(Alquiler alquiler){
-        if (alquiler.getLibro().getPrecio() != null){
-            DetalleAlquiler detalleAlquiler = new DetalleAlquiler();
-            detalleAlquiler.setTotal(alquiler.getLibro().getPrecio());
-            detalleAlquiler.setAlquiler(alquiler);
-            this.detalleAlquilerRepository.save(detalleAlquiler);
+        Date fechaActual = new Date();
+        if (alquiler.getLibro().getFechaVigencia().before(fechaActual)){
+            alquiler.setPrecio(0.0);
+        } else {
+            alquiler.setPrecio(alquiler.getLibro().getPrecio());
         }
         return this.alquilerRepository.save(alquiler);
     }

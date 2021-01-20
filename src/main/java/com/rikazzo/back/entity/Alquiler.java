@@ -29,6 +29,8 @@ public class Alquiler implements Serializable {
 
     private Boolean estado;
 
+    private Double precio;
+
     @ManyToOne
     @JoinColumn(name = "idUsuario", nullable = false)
     @NotNull
@@ -38,9 +40,6 @@ public class Alquiler implements Serializable {
     @JoinColumn(name = "idLibro", nullable = false)
     @NotNull
     private Libro libro;
-
-    @OneToOne(mappedBy = "alquiler")
-    private DetalleAlquiler detalleAlquiler;
 
     @PrePersist
     void init(){
