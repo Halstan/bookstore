@@ -4,12 +4,13 @@ import com.rikazzo.back.entity.Libro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.history.RevisionRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface LibroRepository extends JpaRepository<Libro, Long> {
+public interface LibroRepository extends RevisionRepository<Libro, Long, Long>, JpaRepository<Libro, Long> {
 
     /**
      * Filtra los libros por el estado

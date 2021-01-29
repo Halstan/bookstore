@@ -3,8 +3,10 @@ package com.rikazzo.back.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -14,12 +16,14 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Audited
 @Table(name = "editoriales")
-public class Editorial implements Serializable {
+public class Editorial extends Auditoria implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +43,7 @@ public class Editorial implements Serializable {
     private LocalDate fechaFundacion;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDate fechaCreacion;
 
     @NotNull

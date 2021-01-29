@@ -80,8 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //--------------------------- CRU CATEGORIA ---------------------------
                 .antMatchers(HttpMethod.GET, "/idiomas").hasAnyRole("BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/idiomas/{idIdioma}").hasAnyRole("BIBLIOTECARIO", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/idiomas").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/idiomas").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/idiomas").hasAnyRole("BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/idiomas").hasAnyRole("BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/idiomas/{idIdioma}").hasRole("ADMIN")
 
                 //--------------------------- CRU AUTOR ---------------------------

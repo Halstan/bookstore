@@ -6,14 +6,16 @@ insert into idiomas(nombre_idioma) values ('Español');
 insert into idiomas(nombre_idioma) values ('Inglés');
 insert into idiomas(nombre_idioma) values ('Portugués');
 
-insert into roles(nombre_rol) values ('ROLE_USER');
+insert into roles(nombre_rol) values ('ROLE_LECTOR');
 insert into roles(nombre_rol) values ('ROLE_ADMIN');
 insert into roles(nombre_rol) values ('ROLE_BIBLIOTECARIO');
+
+insert into editoriales(estado, fecha_creacion, fecha_fundacion, fundador, nombre_editorial) VALUES (1, NOW(), NOW(), 'Stan Lee', 'Marvel');
 
 insert into usuarios(activado, apellido, contrasenha, correo, fecha_modificacion, nombre, sexo, username)
     values (TRUE,
             'Arauco Belahonia',
-            '$2a$10$M1cc7lYCzrQUfQaK0C6RfeEYR0p1GFg1I1Up6gQVlJWHys1JyZxzi',
+            '$2a$10$tMHEThDQtr9SfxTOcUZw1O73kffFi8W.bv/h3Seglj8PwiKNWm0X6',
             'enzoarauco@gmail.com',
             '2020-12-21',
             'Enzo Daniel',

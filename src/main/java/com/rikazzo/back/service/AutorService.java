@@ -3,6 +3,7 @@ package com.rikazzo.back.service;
 import com.rikazzo.back.entity.Autor;
 import com.rikazzo.back.repository.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,11 @@ public class AutorService {
 
     public Autor agregarAutor(Autor autor){
         return this.autorRepository.save(autor);
+    }
+
+    @Transactional(readOnly = true)
+    public Revisions<Integer, Autor> findRevisions(Integer idAutor){
+        return this.autorRepository.findRevisions(idAutor);
     }
 
     public Autor actualizarAutor(Autor autor){

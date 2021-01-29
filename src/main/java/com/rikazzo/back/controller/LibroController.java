@@ -1,6 +1,8 @@
 package com.rikazzo.back.controller;
 
 import com.rikazzo.back.entity.Libro;
+import com.rikazzo.back.mapper.LibroMapper;
+import com.rikazzo.back.mapper.LibroMapperImpl;
 import com.rikazzo.back.service.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -23,12 +25,14 @@ import java.util.stream.Collectors;
 @RequestMapping("libros")
 public class LibroController {
 
+    private final LibroMapper libroMapper;
     private final LibroService libroService;
     final String ENCODED = "application/json;charset=UTF-8";
 
     @Autowired
     public LibroController(LibroService libroService) {
         this.libroService = libroService;
+        libroMapper = new LibroMapperImpl();
     }
 
     @GetMapping(produces = ENCODED)
@@ -38,7 +42,7 @@ public class LibroController {
         if (libros.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(libros, HttpStatus.OK);
+        return new ResponseEntity<>(libroMapper.toLibroDtos(libros), HttpStatus.OK);
     }
 
     @GetMapping(value = "page/{page}", produces = ENCODED)

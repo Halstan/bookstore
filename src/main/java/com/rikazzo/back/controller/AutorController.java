@@ -1,6 +1,8 @@
 package com.rikazzo.back.controller;
 
 import com.rikazzo.back.entity.Autor;
+import com.rikazzo.back.mapper.AutorMapper;
+import com.rikazzo.back.mapper.AutorMapperImpl;
 import com.rikazzo.back.service.AutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -20,22 +22,24 @@ import java.util.stream.Collectors;
 @RequestMapping("autores")
 public class AutorController {
 
+    private final AutorMapper autorMapper;
     private final AutorService autorService;
     final String ENCODED = "application/json;charset=UTF-8";
 
     @Autowired
     public AutorController(AutorService autorService) {
         this.autorService = autorService;
+        autorMapper = new AutorMapperImpl();
     }
 
     @GetMapping(produces = ENCODED)
-    private ResponseEntity<List<Autor>> findAll(){
+    private ResponseEntity<?> findAll(){
         List<Autor> autores = this.autorService.findAll();
 
         if (autores.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(autores, HttpStatus.OK);
+        return new ResponseEntity<>(autorMapper.toAutorDTOs(autores), HttpStatus.OK);
     }
 
     @RequestMapping( method = {RequestMethod.POST, RequestMethod.PUT}, produces = ENCODED, consumes = ENCODED)

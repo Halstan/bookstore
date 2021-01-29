@@ -4,12 +4,13 @@ import com.rikazzo.back.entity.Alquiler;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.history.RevisionRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
+public interface AlquilerRepository extends RevisionRepository<Alquiler, Long, Long>, JpaRepository<Alquiler, Long> {
 
     /**
      * Filtra los alquileres por el nombre de usuario del usuario
