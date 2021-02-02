@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //--------------------------- CRU USUARIO ---------------------------
                 .antMatchers(HttpMethod.PUT,"/usuarios").hasAnyRole("LECTOR", "BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.GET,"/usuarios/page/{page}").hasAnyRole("BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.GET,"/usuarios/username/{username}").hasAnyRole("LECTOR", "BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.PUT, "/usuarios").hasAnyRole("LECTOR", "BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.PUT, "/usuarios/admin").hasAnyRole("ADMIN")
@@ -74,8 +75,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //--------------------------- CRU CATEGORIA ---------------------------
                 .antMatchers(HttpMethod.GET, "/categorias").hasAnyRole("BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/categorias/{idCategoria}").hasAnyRole("BIBLIOTECARIO", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/categorias").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/categorias").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/categorias").hasAnyRole("BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/categorias").hasAnyRole("BIBLIOTECARIO", "ADMIN")
 
                 //--------------------------- CRU CATEGORIA ---------------------------
                 .antMatchers(HttpMethod.GET, "/idiomas").hasAnyRole("BIBLIOTECARIO", "ADMIN")
@@ -86,14 +87,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //--------------------------- CRU AUTOR ---------------------------
                 .antMatchers(HttpMethod.GET, "/autores/{idAutor}").hasAnyRole("BIBLIOTECARIO", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/autores").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/autores").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/autores").hasAnyRole("BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/autores").hasAnyRole("BIBLIOTECARIO", "ADMIN")
 
                 //--------------------------- CRU EDITORIAL ---------------------------
                 .antMatchers(HttpMethod.GET, "/editoriales").hasAnyRole("BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/editoriales/{idEditorial}").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/editoriales").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/editoriales").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/editoriales").hasAnyRole("BIBLIOTECARIO", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/editoriales").hasAnyRole("BIBLIOTECARIO", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/editoriales/eliminar/{idEditorial}").hasAnyRole("ADMIN")
 
                 //--------------------------- CRUD LIBRO ---------------------------

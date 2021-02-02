@@ -4,6 +4,9 @@ import com.rikazzo.back.entity.Usuario;
 import com.rikazzo.back.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -39,6 +42,12 @@ public class UsuarioController {
         response.put("Cantidad de usuarios", usuarios.size());
         response.put("Usuarios", usuarios);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "page/{page}", produces = ENCODED)
+    private Page<Usuario> finddAllPaginated(@PathVariable Integer page){
+        Pageable pageable = PageRequest.of(page, 6);
+        return this.usuarioService.findAllPaginated(pageable);
     }
 
     @GetMapping(value = "{idUsuario}", produces = ENCODED)
